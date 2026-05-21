@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ThucTapLTWEB:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6fcf941f-008a-4f98-a188-8281e465454f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/Cart/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/Cart/CartItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Address/AddAddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Address/AddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Address/DeleteAddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Address/UpdateAddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Checkout/CancelOrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Checkout/CheckoutCartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Checkout/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Checkout/OrderDetailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Checkout/PaymentMethodController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/AccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/ForgotPasswordController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/LoginControler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/LogoutController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/RegisterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/ResetPasswordController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/Login/VerifyEmailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/News/NewsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/News/NewsDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/category/AdminCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/category/AdminCategoryCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/category/AdminCategoryDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/category/AdminCategoryEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/dashboard/AdminDashboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/dashboard/ChartData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/discount/AdminDiscount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/discount/AdminDiscountCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/discount/AdminDiscountDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/discount/AdminDiscountEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/news/AdminNews.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/news/AdminNewsCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/news/AdminNewsDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/news/AdminNewsEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/order/AdminOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/order/AdminOrderEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/product/AdminProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/product/AdminProductCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/product/AdminProductDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/product/AdminProductEdit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/user/AdminCreateUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/user/AdminDeleteUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/user/AdminUpdateUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/admin/user/AdminUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/cart/AddCart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/cart/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/cart/DelProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/cart/ShowCart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/cart/UpdateQuantityInCart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/productCategory/FilterProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/productCategory/ListProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/productCategory/ProductDetailController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/search/SearchController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/ChinhSachBaoMat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/ChinhSachDoiTra.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/ChinhSachThanhToan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/CongTacVien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/DieuKhoanDichVu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/LienHe.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/TinTuc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/TrangChu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/controller/servlet/VeNgon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AddressDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminCategoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminDashboardDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminDiscountDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminNewsDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminOrderDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/AdminProductDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/BaseDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/DBProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/DeliveryMethodDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/NewsDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/OrderDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/PaymentMethodDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/ProductDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/dao/UserDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Address.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Banners.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Categories.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Date.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/DeliveryMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Discounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/News.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Order_Trackings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Orders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/PaymentMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Payments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Products.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Products_Categories.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Products_Orders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/model/Users.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminCategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminDashboardService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminDiscountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminNewsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/AdminProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/EmailUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/HashMD5.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/NewsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/nlu/fit/services/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-BaiViet-ChinhSua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-BaiViet-TaoMoi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-BaiViet.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-HomePage.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyDanhMuc-ChinhSua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyDanhMuc-TaoMoi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyDanhMuc.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyDonHang-ChinhSua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyDonHang.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyMaGiamGia-ChinhSua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyMaGiamGia-TaoMoi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLyMaGiamGia.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLySanPham-ChinhSua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLySanPham-TaoMoi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-QuanLySanPham.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-Quanlynguoidung-taomoi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/Admin-Quanlynguoidung.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/BaiViet.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ChiTietSanPham.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ChinhSachBaoMat.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ChinhSachDoiTra.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ChinhSachThanhToan.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/CongTacVien.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/DanhSachDiaChi.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/DatHangThanhCong.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/DatLaiMatKhau.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/DieuKhoanDichVu.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/GioHang.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/LienHe.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/PhuongThucThanhToan.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/QuenMatKhau.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/SanPham-TatCa.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TaiKhoan-CoDonHang-Chitiet.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TaiKhoan-CoDonHang.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TaiKhoan.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TaoTaiKhoan.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ThongBaoXacThuc.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/ThongTinGiaoHang.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TimKiem-KetQua.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TimKiem.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TinTuc.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TrangChu.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/TrangDangNhapTK.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/VeNgon.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "TranAnhTuan2005"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/TranAnhTuan2005/ThucTapLTWEB.git",
+    "accountId": "193f7a48-1a85-4ba4-9b5c-4b1381b943c2"
+  }
+}]]></component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="3AjikCHs7YmscKACx1aEF4jCiGX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Tomcat Server.Tomcat 10.1.49.executor": "Run",
+    "git-widget-placeholder": "Tuan",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/OneDrive/Documents/GitHub/ThucTapLTWEB/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\OneDrive\Documents\GitHub\ThucTapLTWEB\src\main\webapp" />
+      <recent name="C:\Users\User\OneDrive\Documents\GitHub\ThucTapLTWEB\src\main\resources" />
+      <recent name="C:\Users\User\OneDrive\Documents\GitHub\ThucTapLTWEB\src\main\java\vn\edu\nlu\fit" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationStatuses">
+      <map>
+        <entry key="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+          <value>
+            <map>
+              <entry key="Tomcat 10.1.49" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 10.1.49" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.49" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment>
+        <artifact name="ThucTapLTWEB:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/ThucTapLTWEB_war_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="be33c41f-45f2-4680-b610-e452df3952f4" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="ThucTapLTWEB:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6fcf941f-008a-4f98-a188-8281e465454f" name="Changes" comment="" />
+      <created>1773112522075</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1773112522075</updated>
+      <workItem from="1773112523145" duration="1000" />
+      <workItem from="1773231480025" duration="300000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
