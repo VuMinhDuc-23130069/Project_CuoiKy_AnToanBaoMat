@@ -5,7 +5,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Tài khoản của bạn - Chi tiết đơn hàng</title>
+    <title>Chữ ký số</title>
 
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
@@ -206,6 +206,155 @@
         background: #fcfcfc;
     }
 
+    .ds-container {
+        width: 100%;
+    }
+
+    .ds-title {
+        border-bottom: 1px solid #000;
+        padding-bottom: 15px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: normal;
+    }
+
+    /* Các khối thông báo */
+    .ds-alert {
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .ds-alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .ds-alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .ds-alert-warning {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffeeba;
+        line-height: 24px;
+        margin: 0px 0px 20px;
+        padding: 15px;
+    }
+
+    .ds-warning-text {
+        margin: 0;
+        color: #856404;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* Thẻ chứa nội dung */
+    .ds-card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 30px;
+    }
+
+    /* Trạng thái */
+    .ds-status {
+        margin-top: 0;
+        font-size: 22px;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+
+    .ds-status-active {
+        color: #28a745;
+    }
+
+    .ds-status-inactive {
+        color: #6c757d;
+    }
+
+    .ds-card p {
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .ds-divider {
+        border: none;
+        border-top: 1px solid #dee2e6;
+        margin: 25px 0;
+    }
+
+    /* Button */
+    .ds-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .ds-btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .ds-btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .ds-btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        margin-top: 5px;
+    }
+
+    .ds-btn-primary:hover {
+        background-color: #0069d9;
+    }
+
+    /* Modal Xác nhận Báo mất khoá */
+
+    .ds-modal-header {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-bottom: none;
+    }
+
+    .ds-modal-title {
+        font-weight: bold;
+    }
+
+    .ds-modal-body {
+        font-size: 15px;
+        color: #333;
+        padding: 20px;
+    }
+
+    .ds-modal-warning-title {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .ds-modal-list {
+        margin-bottom: 0;
+        padding-left: 20px;
+    }
+
+    .ds-modal-list-item {
+        margin-bottom: 8px;
+    }
+
+    .ds-modal-footer {
+        border-top: none;
+    }
 
 </style>
 
@@ -359,7 +508,7 @@
 
 <main class="mainContainer-theme">
     <div class="layout-infor-account text-center">
-        <h1>Tài khoản của bạn</h1>
+        <h1>Chữ ký số</h1>
     </div>
 
     <div class="container-fluid">
@@ -370,9 +519,9 @@
                     <div class="AccountContent">
                         <div class="AccountList">
                             <ul class="list-unstyled">
-                                <li class="current"><a href="<c:url value='/TaiKhoanCuaBan'/>">Thông tin tài khoản</a></li>
+                                <li><a href="<c:url value='/TaiKhoanCuaBan'/>">Thông tin tài khoản</a></li>
                                 <li><a href="<c:url value='/DanhSachDiaChi'/>">Danh sách địa chỉ</a></li>
-                                <li><a href="<c:url value='/ChuKySo'/>">Chữ ký số</a></li>
+                                <li class="current"><a href="<c:url value='/ChuKySo'/>">Chữ ký số</a></li>
                                 <li class="last"><a href="<c:url value='/DangXuat'/>">Đăng xuất</a></li>
                             </ul>
                         </div>
@@ -384,110 +533,89 @@
 
 
     <div class="col-xs-12 col-sm-9">
-        <div class="row">
-            <div class="col-xs-12" id="customer_sidebar">
-                <p class="title-detail">Thông tin tài khoản</p>
+        <div class="ds-container">
+            <h2 class="ds-title">Quản lý Chữ ký số</h2>
 
-                <p class="name_account"><span>Họ tên: </span>${sessionScope.user.fullName}</p>
-
-                <p class="email "><span>Email: </span>${sessionScope.user.email}</p>
-                <div class="address ">
-
-                    <p><span>SĐT: </span>${sessionScope.user.phoneNumber}</p>
-
-                    <div class="account-address-box">
-                        <label class="address-label">Địa chỉ giao hàng</label>
-
-                        <!-- Hiển thị link xem địa chỉ -->
-                        <p class="address-view">
-                            <a href="<c:url value='/DanhSachDiaChi'/>" class="address-view-link">Xem địa chỉ</a>
-                        </p>
-                    </div>
-
-                </div>
+            <%
+                String message = (String) session.getAttribute("message");
+                String error = (String) session.getAttribute("error");
+                if (message != null) {
+            %>
+            <div class="ds-alert ds-alert-success">
+                <%= message %>
             </div>
+            <%
+                    session.removeAttribute("message");
+                }
+                if (error != null) {
+            %>
+            <div class="ds-alert ds-alert-error">
+                <%= error %>
+            </div>
+            <%
+                    session.removeAttribute("error");
+                }
+            %>
 
+            <div class="ds-card">
 
-            <div class="col-xs-12" id="customer_orders">
-                <div class="customer-table-wrap">
-                    <div class="customer_order customer-table-bg">
-                        <div class="orders-title">DANH SÁCH ĐƠN HÀNG MỚI NHẤT</div>
-                        <div class="table-responsive">
-                            <table class="orders-table">
-                                <thead>
-                                <tr>
-                                    <th>Mã đơn hàng</th>
-                                    <th>Ngày đặt</th>
-                                    <th>Thành tiền</th>
-                                    <th>Trạng thái</th>
-                                    <th>Vận chuyển</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:choose>
-                                    <%-- Nếu có đơn hàng --%>
-                                    <c:when test="${not empty orders}">
-                                        <c:forEach var="o" items="${orders}">
-                                            <tr>
-                                                <td>
-                                                    <a href="OrderDetail?id=${o.id}"
-                                                       style="font-weight: bold; color: #007bff;">
-                                                        #${o.id}
-                                                    </a>
-                                                </td>
-                                                <td><fmt:formatDate value="${o.orderDateAsDate}" pattern="HH:mm dd-MM-yyyy"/>
-                                                </td>
-                                                <td>
-                                                    <span style="color: #d9534f; font-weight: bold;">
-                                                        <fmt:formatNumber value="${o.total}" type="currency" currencySymbol="₫"/>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span class="status-badge ${o.orderStatus == 1 ? 'status-new' : ''}
-                                                            ${o.orderStatus == 2 ? 'status-shipping' : ''}
-                                                            ${o.orderStatus == 3 ? 'status-done' : ''}
-                                                            ${o.orderStatus == 4 ? 'status-cancel' : ''}">
-                                                                ${o.statusDescription}
-                                                        </span>
-                                                </td>
-                                                <td>${o.deliveryMethod}</td>
+                <c:choose>
+                    <c:when test="${not empty activeKey}">
+                        <h3 class="ds-status ds-status-active">Trạng thái: Đang hoạt động</h3>
+                        <p>
+                            <strong>Ngày tạo khoá:</strong>
+                            <fmt:formatDate value="${activeKey.createdAt}" pattern="dd/MM/yyyy HH:mm:ss"/>
+                        </p>
+                        <p><em>Khoá này đang được sử dụng để xác thực các đơn hàng của bạn.</em></p>
 
-                                                <td style="text-align: center;">
-                                                    <c:choose>
-                                                        <%-- chỉ hiện nút hủy khi đang chờ xác nhận --%>
-                                                        <c:when test="${o.orderStatus == 1}">
-                                                            <a href="CancelOrder?id=${o.id}"
-                                                               class="btn btn-danger btn-sm"
-                                                               style="font-size: 12px; padding: 5px 10px;"
-                                                               onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng #${o.id} không? Hành động này không thể hoàn tác.');">
-                                                                Hủy đơn
-                                                            </a>
-                                                        </c:when>
+                        <hr class="ds-divider">
 
-                                                        <%--ko thể hủy khi ở tt khác--%>
-                                                        <c:otherwise>
-                                                            <span style="color: #aaa; font-size: 12px;">--</span>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </td>
+                        <form id="revokeForm" action="<c:url value='/ChuKySo'/>" method="POST">
+                            <input type="hidden" name="action" value="revokeKey">
+                            <div class="ds-alert-warning">
+                                <p class="ds-warning-text">
+                                    <strong>Cảnh báo:</strong> Nếu bạn nghi ngờ khoá bảo mật bị lộ, hãy báo mất ngay lập tức. Hành động này không thể hoàn tác!
+                                </p>
+                            </div>
+                            <button type="button" class="ds-btn ds-btn-danger" data-bs-toggle="modal" data-bs-target="#confirmRevokeModal">
+                                Báo mất khoá
+                            </button>
+                        </form>
+                    </c:when>
 
-                                            </tr>
-                                        </c:forEach>
-                                    </c:when>
-                                    <%--chưa có đơn hàng nào --%>
-                                    <c:otherwise>
-                                        <tr>
-                                            <td colspan="5" style="text-align: center; padding: 30px; font-style: italic; color: #777;">
-                                                Bạn chưa có đơn hàng nào. <a href="<c:url value='/SanPham-TatCa'/>" style="color: #839b4c; font-weight: bold;">Mua sắm ngay</a>
-                                            </td>
-                                        </tr>
-                                    </c:otherwise>
-                                </c:choose>
-                                </tbody>
-                            </table>
-                        </div>
+                    <c:otherwise>
+                        <h3 class="ds-status ds-status-inactive">Trạng thái: Chưa có khoá</h3>
+                        <p>Bạn hiện không có chữ ký số nào đang hoạt động. Vui lòng tạo khoá mới để đảm bảo an toàn cho các giao dịch.</p>
+
+                        <a href="" class="ds-btn ds-btn-primary">
+                            Tạo khoá mới
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmRevokeModal" tabindex="-1" aria-labelledby="confirmRevokeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header ds-modal-header">
+                        <h5 class="modal-title ds-modal-title" id="confirmRevokeModalLabel">
+                            CẢNH BÁO BẢO MẬT
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
+                    <div class="modal-body ds-modal-body">
+                        <p class="ds-modal-warning-title">BẠN CÓ CHẮC CHẮN MUỐN BÁO MẤT KHOÁ?</p>
+                    </div>
+
+                    <div class="modal-footer ds-modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>
+                        <button type="button" class="btn btn-danger" id="confirmSubmitBtn">Báo mất ngay</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -712,6 +840,22 @@
         if (e.key === "Enter") {
             e.preventDefault();
             document.getElementById("searchBtn").click();
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmBtn = document.getElementById('confirmSubmitBtn');
+        const revokeForm = document.getElementById('revokeForm');
+
+        if (confirmBtn && revokeForm) {
+            confirmBtn.addEventListener('click', function () {
+                confirmBtn.innerHTML = 'Đang xử lý...';
+                confirmBtn.disabled = true;
+
+                // Submit form
+                revokeForm.submit();
+            });
         }
     });
 </script>

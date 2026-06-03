@@ -28,7 +28,7 @@ public class PaymentMethodController extends HttpServlet {
         request.setAttribute("listDeliveryMethods", listDeliveryMethods);
 
 
-        request.getRequestDispatcher("ChinhSachThanhToan.jsp").forward(request,response);
+        request.getRequestDispatcher("PhuongThucThanhToan.jsp").forward(request,response);
     }
 
     @Override
