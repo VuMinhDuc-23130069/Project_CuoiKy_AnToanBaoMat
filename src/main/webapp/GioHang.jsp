@@ -323,6 +323,243 @@
         opacity: 0.6;
     }
 
+    /* Key Management Section Styles */
+    .key-management-section {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+    }
+
+    .key-section-header {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #d0d0d0;
+    }
+
+    .key-section-header h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0 0 8px 0;
+    }
+
+    .key-section-info {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin: 0;
+    }
+
+    .key-section-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .key-subsection {
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        border-left: 4px solid #3498db;
+    }
+
+    .key-subsection h4 {
+        font-size: 15px;
+        font-weight: 600;
+        color: #34495e;
+        margin: 0 0 12px 0;
+    }
+
+    .key-action-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-right: 10px;
+        margin-bottom: 8px;
+    }
+
+    .btn-primary.key-action-btn {
+        background-color: #27ae60;
+        color: white;
+    }
+
+    .btn-primary.key-action-btn:hover {
+        background-color: #229954;
+    }
+
+    .btn-primary.key-action-btn:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+    }
+
+    .btn-outline-primary.key-action-btn {
+        background-color: white;
+        color: #3498db;
+        border: 1px solid #3498db;
+    }
+
+    .btn-outline-primary.key-action-btn:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-outline-secondary.key-action-btn {
+        background-color: white;
+        color: #7f8c8d;
+        border: 1px solid #bdc3c7;
+    }
+
+    .btn-outline-secondary.key-action-btn:hover {
+        background-color: #ecf0f1;
+    }
+
+    .key-note {
+        display: block;
+        font-size: 12px;
+        color: #95a5a6;
+        margin-top: 8px;
+    }
+
+    .key-status-container {
+        padding: 12px;
+        background-color: #ecf0f1;
+        border-radius: 4px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    .key-status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .key-status-badge.active {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .key-status-badge.inactive {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .key-status-badge.none {
+        background-color: #d6d8db;
+        color: #383d41;
+    }
+
+    .key-action-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .email-key-section {
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border-left: 4px solid #f39c12;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 8px;
+    }
+
+    .form-control {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    }
+
+    .alert {
+        padding: 12px 15px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .alert-info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+
+    .loading-spinner {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #3498db;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .text-muted {
+        color: #7f8c8d;
+        font-size: 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .key-action-group {
+            flex-direction: column;
+        }
+
+        .key-action-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .input-group {
+            flex-direction: column;
+        }
+    }
+
 </style>
 
 
@@ -538,6 +775,47 @@
                         <p>Ghi chú đơn hàng</p>
                         <textarea name="note" id="order-note"></textarea>
                     </div>
+
+                    <!-- Key Management Section -->
+                    <div class="key-management-section" id="keyManagementSection">
+                        <div class="key-section-header">
+                            <h3><i class="fas fa-lock"></i> Quản lý khóa bảo mật RSA</h3>
+                            <p class="key-section-info">Tạo và quản lý khóa mã hóa RSA-2048 của bạn</p>
+                        </div>
+
+                        <div class="key-section-content">
+                            <!-- Generate Key Section -->
+                            <div class="key-subsection">
+                                <h4>1. Tạo cặp khóa mới</h4>
+                                <button type="button" id="generateKeyBtn" class="btn btn-primary key-action-btn" onclick="generateKeyPair()">
+                                    <i class="fas fa-key"></i> Tạo khóa
+                                </button>
+                                <small class="key-note">Tạo cặp khóa RSA-2048 mới cho tài khoản của bạn</small>
+                            </div>
+
+                            <!-- Key Status Section -->
+                            <div class="key-subsection">
+                                <h4>2. Trạng thái khóa hiện tại</h4>
+                                <div id="keyStatusContainer" class="key-status-container">
+                                    <p id="keyStatusText" style="color: #666;">Đang kiểm tra...</p>
+                                </div>
+                            </div>
+
+                            <!-- Key Actions Section -->
+                            <div class="key-subsection" id="keyActionsSection" style="display: none;">
+                                <h4>3. Hành động với khóa</h4>
+                                <div class="key-action-group">
+                                    <button type="button" class="btn btn-outline-primary key-action-btn" onclick="downloadPublicKey()">
+                                        <i class="fas fa-download"></i> Tải khóa công khai
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Messages -->
+                        <div id="keyStatusMessage" class="alert" style="display: none; margin-top: 15px;"></div>
+                    </div>
+                    <!-- End Key Management Section -->
 
                 </div>
 
@@ -819,16 +1097,289 @@
         });
 
         //lấy ghi chú đn hàng
-        function proceedToCheckout() {
-            const noteElement = document.getElementById('order-note');
-            const noteValue = noteElement ? noteElement.value.trim() : "";
-            // xử lý tiếng việt
-            const url = "Checkout-infor?note=" + encodeURIComponent(noteValue);
+         function proceedToCheckout() {
+             const noteElement = document.getElementById('order-note');
+             const noteValue = noteElement ? noteElement.value.trim() : "";
+             // xử lý tiếng việt
+             const url = "Checkout-infor?note=" + encodeURIComponent(noteValue);
 
-            // 3. Chuyển trang
-            window.location.href = url;
-        }
-    </script>
-</body>
+             // 3. Chuyển trang
+             window.location.href = url;
+         }
+     </script>
 
-</html>
+     <!-- Key Management JavaScript -->
+     <script>
+         // Initialize key management on page load
+         document.addEventListener('DOMContentLoaded', function() {
+             loadKeyStatus();
+         });
+
+         /**
+          * Load and display current key status
+          */
+         function loadKeyStatus() {
+             const statusContainer = document.getElementById('keyStatusContainer');
+             const statusText = document.getElementById('keyStatusText');
+
+             if (!statusText) return;
+
+             statusText.innerHTML = '<span class="loading-spinner"></span> Đang kiểm tra...';
+
+             fetch('${pageContext.request.contextPath}/key-status', {
+                 method: 'GET',
+                 headers: {
+                     'Content-Type': 'application/json'
+                 }
+             })
+             .then(response => response.json())
+             .then(data => {
+                 if (data.success) {
+                     const keyStatus = data.data;
+                     let statusHTML = '';
+
+                     if (keyStatus.activeKeys && keyStatus.activeKeys > 0) {
+                         statusHTML = '<span class="key-status-badge active">';
+                         statusHTML += '<i class="fas fa-check-circle"></i> ✓ Có khóa hoạt động</span>';
+
+                          // Show key details if available
+                         if (keyStatus.mostRecentLabel) {
+                             statusHTML += '<div style="margin-top: 8px; font-size: 12px; color: #666;">';
+                             statusHTML += '<strong>Khóa hiện tại:</strong> ' + escapeHtml(keyStatus.mostRecentLabel) + '<br>';
+                             if (keyStatus.mostRecentCreated) {
+                                 statusHTML += '<strong>Tạo lúc:</strong> ' + formatDate(new Date(keyStatus.mostRecentCreated));
+                             }
+                             statusHTML += '</div>';
+                         }
+
+                          // Show key actions (if the UI elements exist)
+                          const actionsSection = document.getElementById('keyActionsSection');
+                          if (actionsSection) actionsSection.style.display = 'block';
+                          const downloadPrivBtn = document.getElementById('downloadPrivateKeyBtn');
+                          if (downloadPrivBtn) downloadPrivBtn.style.display = 'inline-flex';
+                     } else {
+                         statusHTML = '<span class="key-status-badge none">';
+                         statusHTML += '<i class="fas fa-info-circle"></i> Chưa có khóa</span>';
+                         statusHTML += '<div style="margin-top: 8px; font-size: 12px; color: #666;">';
+                         statusHTML += 'Bạn chưa tạo khóa bảo mật. Hãy tạo khóa để bắt đầu.';
+                         statusHTML += '</div>';
+
+                          // Hide key actions (if present)
+                          const actionsSectionNone = document.getElementById('keyActionsSection');
+                          if (actionsSectionNone) actionsSectionNone.style.display = 'none';
+                     }
+
+                     statusContainer.innerHTML = statusHTML;
+                 } else {
+                     statusText.textContent = 'Lỗi: ' + (data.error || 'Không thể tải trạng thái khóa');
+                 }
+             })
+             .catch(error => {
+                 console.error('Error loading key status:', error);
+                 statusText.textContent = 'Lỗi kết nối. Vui lòng thử lại.';
+             });
+         }
+
+         /**
+          * Generate new RSA key pair
+          */
+         function generateKeyPair() {
+             const btn = document.getElementById('generateKeyBtn');
+             const originalText = btn.innerHTML;
+
+             // Disable button and show loading state
+             btn.disabled = true;
+             btn.innerHTML = '<span class="loading-spinner"></span> Đang tạo khóa...';
+
+             // Build a hidden iframe and form to submit the POST and receive a download without navigating away
+             const iframeName = 'keyGenDownloadFrame';
+             let iframe = document.getElementById(iframeName);
+             if (!iframe) {
+                 iframe = document.createElement('iframe');
+                 iframe.style.display = 'none';
+                 iframe.id = iframeName;
+                 iframe.name = iframeName;
+                 document.body.appendChild(iframe);
+             }
+
+             const form = document.createElement('form');
+             form.method = 'POST';
+             form.action = '${pageContext.request.contextPath}/generate-key';
+             form.target = iframeName;
+
+             const input = document.createElement('input');
+             input.type = 'hidden';
+             input.name = 'label';
+             input.value = 'Key from Shopping Cart - ' + new Date().toLocaleString('vi-VN');
+             form.appendChild(input);
+
+             document.body.appendChild(form);
+             form.submit();
+
+             // Small delay to allow download to start then refresh status and UI
+             setTimeout(() => {
+                 showMessage('success', 'Khóa RSA đã được tạo và đang được tải xuống. Vui lòng lưu nó ở nơi an toàn.');
+                 loadKeyStatus();
+                 btn.disabled = false;
+                 btn.innerHTML = originalText;
+                 // remove temporary form
+                 document.body.removeChild(form);
+             }, 1500);
+         }
+
+         /**
+          * Download public key
+          */
+         function downloadPublicKey() {
+             const btn = event.target.closest('button');
+             const originalText = btn.innerHTML;
+
+             btn.disabled = true;
+             btn.innerHTML = '<span class="loading-spinner"></span> Đang tải...';
+
+             // Use a simple link approach for file download
+             const link = document.createElement('a');
+             link.href = '${pageContext.request.contextPath}/download-public-key';
+             link.click();
+
+             setTimeout(() => {
+                 btn.disabled = false;
+                 btn.innerHTML = originalText;
+                 showMessage('success', 'Khóa công khai đã được tải xuống!');
+             }, 1500);
+         }
+
+          /**
+           * Download private key (one-time only)
+           */
+          function downloadPrivateKey() {
+              // Confirm with user
+              if (!confirm('⚠️ CẢNH BÁO:\n\nKhóa riêng tư chỉ có thể tải được 1 lần sau khi tạo.\n\nBạn có chắc muốn tải xuống ngay bây giờ? Vui lòng lưu nó ở nơi an toàn.')) {
+                  return;
+              }
+
+              // If user requests to download private key, generate a new key and download immediately
+              generateKeyPair();
+              // hide the button to reduce user confusion
+              const btn = document.getElementById('downloadPrivateKeyBtn');
+              if (btn) {
+                  btn.style.display = 'none';
+              }
+         }
+
+         /**
+          * Toggle email sending section
+          */
+         function toggleEmailSection() {
+             const emailSection = document.getElementById('emailKeySection');
+             emailSection.style.display = emailSection.style.display === 'none' ? 'block' : 'none';
+         }
+
+         /**
+          * Send private key via email
+          */
+         function sendPrivateKeyViaEmail() {
+             const emailInput = document.getElementById('emailForKey');
+             const email = emailInput.value.trim();
+
+             // Validate email
+             if (!email) {
+                 showMessage('error', 'Vui lòng nhập địa chỉ email');
+                 emailInput.focus();
+                 return;
+             }
+
+             if (!isValidEmail(email)) {
+                 showMessage('error', 'Địa chỉ email không hợp lệ');
+                 emailInput.focus();
+                 return;
+             }
+
+              // Confirm with user
+              if (!confirm('Gửi khóa riêng tư tới: ' + email + '?\n\nChắc chắn địa chỉ email là chính xác trước khi tiếp tục.')) {
+                  return;
+              }
+
+             const btn = event.target;
+             const originalText = btn.innerHTML;
+
+             btn.disabled = true;
+             btn.innerHTML = '<span class="loading-spinner"></span> Đang gửi...';
+
+             fetch('${pageContext.request.contextPath}/send-private-key', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/x-www-form-urlencoded'
+                 },
+                 body: 'email=' + encodeURIComponent(email)
+             })
+             .then(response => response.json())
+             .then(data => {
+                 if (data.success) {
+                     showMessage('success', 'Khóa riêng tư đã được gửi tới ' + email + '!');
+                     document.getElementById('emailKeySection').style.display = 'none';
+                     emailInput.value = '';
+                 } else {
+                     showMessage('error', 'Lỗi: ' + (data.error || 'Không thể gửi email'));
+                 }
+             })
+             .catch(error => {
+                 console.error('Error sending private key:', error);
+                 showMessage('error', 'Lỗi kết nối. Vui lòng thử lại.');
+             })
+             .finally(() => {
+                 btn.disabled = false;
+                 btn.innerHTML = originalText;
+             });
+         }
+
+         /**
+          * Show status message
+          */
+         function showMessage(type, message) {
+             const messageContainer = document.getElementById('keyStatusMessage');
+             messageContainer.className = 'alert alert-' + type;
+             messageContainer.textContent = message;
+             messageContainer.style.display = 'block';
+
+             // Auto-hide after 5 seconds
+             setTimeout(() => {
+                 messageContainer.style.display = 'none';
+             }, 5000);
+         }
+
+          /**
+           * Validate email format
+           */
+          function isValidEmail(email) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              return emailRegex.test(email);
+          }
+
+         /**
+          * Escape HTML special characters
+          */
+         function escapeHtml(text) {
+             const map = {
+                 '&': '&amp;',
+                 '<': '&lt;',
+                 '>': '&gt;',
+                 '"': '&quot;',
+                 "'": '&#039;'
+             };
+             return text.replace(/[&<>"']/g, m => map[m]);
+         }
+
+         /**
+          * Format date to Vietnamese locale
+          */
+         function formatDate(date) {
+             if (!(date instanceof Date)) {
+                 date = new Date(date);
+             }
+             return date.toLocaleString('vi-VN');
+         }
+     </script>
+ </body>
+
+ </html>
