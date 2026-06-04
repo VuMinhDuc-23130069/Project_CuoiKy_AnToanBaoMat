@@ -536,6 +536,25 @@
         <div class="ds-container">
             <h2 class="ds-title">Quản lý Chữ ký số</h2>
 
+            <div class="p-3 mb-4 rounded" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
+                <div class="row align-items-center">
+                    <div class="col-md-8 col-sm-12">
+                        <h5 style="font-size: 16px; font-weight: 700; color: #2c1c12; margin-bottom: 5px;">
+                            Tải công cụ hỗ trợ ký số dữ liệu
+                        </h5>
+                        <p class="mb-md-0" style="font-size: 14px; color: #555; line-height: 1.4;">
+                            Để đảm bảo an toàn, việc tạo khóa và ký số được thực hiện Offline trên máy tính cá nhân.
+                            Vui lòng tải bộ cài đặt của hệ thống (hỗ trợ Windows).
+                        </p>
+                    </div>
+                    <div class="col-md-4 col-sm-12 text-md-end text-start mt-2 mt-md-0">
+                        <a href="<c:url value='/Downloads/ToolChuKy-1.0.exe'/>" class="ds-btn" style="background-color: #28a745; color: white; font-weight: 600; padding: 8px 16px;">
+                            Tải về máy (.exe)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <%
                 String message = (String) session.getAttribute("message");
                 String error = (String) session.getAttribute("error");
