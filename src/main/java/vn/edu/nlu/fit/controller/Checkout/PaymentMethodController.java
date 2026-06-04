@@ -6,8 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.nlu.fit.dao.DeliveryMethodDao;
+import vn.edu.nlu.fit.dao.DiscountDAO;
 import vn.edu.nlu.fit.dao.PaymentMethodDao;
 import vn.edu.nlu.fit.model.DeliveryMethods;
+import vn.edu.nlu.fit.model.Discounts;
 import vn.edu.nlu.fit.model.PaymentMethods;
 
 import java.io.IOException;
@@ -26,6 +28,11 @@ public class PaymentMethodController extends HttpServlet {
         DeliveryMethodDao deliveryDAO = new DeliveryMethodDao();
         List<DeliveryMethods> listDeliveryMethods = deliveryDAO.getAllDeliveryMethods();
         request.setAttribute("listDeliveryMethods", listDeliveryMethods);
+
+        // Lấy danh sách mã giảm giá hợp lệ
+        DiscountDAO discountDAO = new DiscountDAO();
+        List<Discounts> listDiscounts = discountDAO.getAvailableDiscounts();
+        request.setAttribute("listDiscounts", listDiscounts);
 
 
         request.getRequestDispatcher("PhuongThucThanhToan.jsp").forward(request,response);

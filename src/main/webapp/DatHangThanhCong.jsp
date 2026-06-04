@@ -295,6 +295,15 @@
                 </span>
             </div>
 
+            <c:if test="${not empty discountAmount && discountAmount > 0}">
+                <div class="summary-line" style="color: #dc3545;">
+                    <span>Giảm giá (${percentDiscount}%)</span>
+                    <span>
+                        -<fmt:formatNumber value="${discountAmount}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
+                    </span>
+                </div>
+            </c:if>
+
             <div class="summary-line">
                 <span>Phí vận chuyển</span>
                 <span>

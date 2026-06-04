@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.nlu.fit.Cart.Cart;
 import vn.edu.nlu.fit.dao.DeliveryMethodDao;
+import vn.edu.nlu.fit.dao.DiscountDAO;
 import vn.edu.nlu.fit.dao.OrderDAO;
 import vn.edu.nlu.fit.dao.PaymentMethodDao;
+import vn.edu.nlu.fit.model.Discounts;
 import vn.edu.nlu.fit.model.Users;
 
 import java.io.IOException;
@@ -36,14 +38,35 @@ public class OrderController extends HttpServlet {
         String paymentId = request.getParameter("paymentId");
         String deliveryId = request.getParameter("delivery");
 
+        // Hứng ID mã giảm giá từ form
+        String appliedDiscountIdStr = request.getParameter("appliedDiscountId");
+        Integer discountId = (appliedDiscountIdStr != null && !appliedDiscountIdStr.trim().isEmpty()) ? Integer.parseInt(appliedDiscountIdStr) : null;
+
         int shipId = Integer.parseInt(deliveryId);
 
         // Gọi DAO để lấy giá tiền chính xác từ DB
         DeliveryMethodDao deliveryDao = new DeliveryMethodDao();
         double shippingFee = deliveryDao.getShippingPriceById(shipId);
 
+        // logic tính tiền giảm giá
+        double discountAmount = 0;
+        int percentDiscount = 0;
+
+        if (discountId != null) {
+            DiscountDAO discountDao = new DiscountDAO();
+            Discounts discount = discountDao.getDiscountById(discountId);
+
+            if (discount != null && discount.getQuantity() > 0 && discount.getDiscountStatus() == 1) {
+                percentDiscount = (int) discount.getPercentDiscount();
+                discountAmount = (cart.getTotal() * percentDiscount) / 100.0;
+            } else {
+                discountId = null; // Huỷ áp dụng nếu mã lỗi/hết lượt
+            }
+        }
+
         // Tính tổng tiền cuối cùng
-        double finalTotal = cart.getTotal() + shippingFee;
+        double finalTotal = cart.getTotal() - discountAmount + shippingFee;
+        if (finalTotal < 0) finalTotal = 0;
 
         // lấy từ hàm dopost đã vết bên checkoutcontroller
         String name = (String) session.getAttribute("order_name");
@@ -62,7 +85,7 @@ public class OrderController extends HttpServlet {
 
         OrderDAO orderDAO = new OrderDAO();
         int orderId = orderDAO.createOrder(name, phone, email, address,
-                Integer.parseInt(deliveryId), Integer.parseInt(paymentId), finalTotal, userId, cart, note);
+                Integer.parseInt(deliveryId), Integer.parseInt(paymentId), finalTotal, userId, cart, note, discountId);
 
         if (orderId != -1) {
             PaymentMethodDao paymentDao = new PaymentMethodDao();
@@ -75,16 +98,15 @@ public class OrderController extends HttpServlet {
             request.setAttribute("customerPhone", phone);
             request.setAttribute("customerEmail", email);
             request.setAttribute("customerAddress", address);
-
-
             //gửi giỏ hàng sang request để jsp hiển thị lần cuối
             request.setAttribute("finalCart", cart);
             //gửi qua dathangthnagcong
             request.setAttribute("shippingFee", shippingFee);
             request.setAttribute("totalMoney", finalTotal);
-
             //pttt
             request.setAttribute("paymentMethodName", paymentName);
+            request.setAttribute("discountAmount", discountAmount);
+            request.setAttribute("percentDiscount", percentDiscount);
             //mua xong xóa đi
             session.removeAttribute("cart");
             session.removeAttribute("order_name");

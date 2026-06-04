@@ -27,14 +27,15 @@ public class OrderDAO extends BaseDao{
     }
 
     public int createOrder(String name, String phone, String email, String address,
-                           int deliveryId, int paymentId, double totalMoney, Integer userId, Cart cart, String note) {
+                           int deliveryId, int paymentId, double totalMoney, Integer userId, Cart cart, String note, Integer discountId) {
 
         return getJdbi().inTransaction(handle -> {
             try {
+                // Cập nhật câu lệnh SQL có thêm trường discount_id
                 String sqlOrder = "INSERT INTO orders " +
-                        "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note) " +
+                        "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note, discount_id) " +
                         "VALUES " +
-                        "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note)";
+                        "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note, :discountId)";
 
                 int orderId = handle.createUpdate(sqlOrder)
                         .bind("name", name)
@@ -48,10 +49,12 @@ public class OrderDAO extends BaseDao{
                         .bind("deliveryId", deliveryId)
                         .bind("paymentId", paymentId)
                         .bind("note", note)
+                        .bind("discountId", discountId) // Lưu ID mã giảm giá (có thể null)
                         .executeAndReturnGeneratedKeys("id")
                         .mapTo(Integer.class)
                         .one();
 
+                // Lưu chi tiết đơn hàng
                 String sqlDetail = "INSERT INTO products_orders " +
                         "(order_id, product_id, product_name, quantity, price_at_time) " +
                         "VALUES " +
@@ -66,6 +69,14 @@ public class OrderDAO extends BaseDao{
                             .bind("price", item.getProduct().getPrice())
                             .execute();
                 }
+
+                // --- THÊM LOGIC TRỪ SỐ LƯỢNG MÃ GIẢM GIÁ ---
+                if (discountId != null) {
+                    handle.createUpdate("UPDATE discounts SET quantity = quantity - 1 WHERE id = :discountId AND quantity > 0")
+                            .bind("discountId", discountId)
+                            .execute();
+                }
+
                 return orderId;
             } catch (Exception e) {
                 e.printStackTrace();

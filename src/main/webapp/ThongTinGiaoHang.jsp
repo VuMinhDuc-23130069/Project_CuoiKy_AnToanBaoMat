@@ -425,11 +425,6 @@
             </div>
             <hr style="border-top: 1px solid #eee; margin: 10px 0;">
 
-            <div class="discount">
-                <input type="text" placeholder="Mã giảm giá" name="discount">
-                <button type="button">Sử dụng</button>
-            </div>
-
             <div class="summary-line">
                 <span>Tạm tính</span>
                 <span>
