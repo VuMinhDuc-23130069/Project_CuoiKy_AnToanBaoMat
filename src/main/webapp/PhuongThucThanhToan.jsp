@@ -272,6 +272,29 @@
             overflow-y: auto;
             padding-right: 5px;
         }
+
+        .discount-select-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .discount-select-label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #discount-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        /* Style cho dòng hiển thị số tiền giảm giá */
+        #discount-line {
+            color: #dc3545;
+            /* Thuộc tính display: none; vẫn được giữ trực tiếp dưới HTML để JavaScript dễ dàng điều khiển ẩn/hiện */
+        }
     </style>
 
 </head>
@@ -323,9 +346,9 @@
             </div>
 
             <div class="form-footer">
+                <input type="hidden" name="appliedDiscountId" id="appliedDiscountId" value="">
                 <a href="GioHang.jsp" class="cart-link">Giỏ hàng</a>
-                <button type="submit" class="submit-btn" >Hoàn tất đơn
-                    hàng</button>
+                <button type="submit" class="submit-btn" >Hoàn tất đơn hàng</button>
             </div>
         </form>
         <!--Đường ngăn cách-->
@@ -353,16 +376,34 @@
             </div>
             <hr style="border-top: 1px solid #eee; margin: 10px 0;">
 
+            <div class="discount-select-wrapper">
+                <label for="discount-select" class="discount-select-label">Mã giảm giá của bạn:</label>
+                <select id="discount-select" onchange="selectDiscount()">
+                    <option value="">-- Chọn mã giảm giá có sẵn --</option>
+                    <c:forEach items="${listDiscounts}" var="d">
+                        <option value="${d.discountName}" data-percent="${d.percentDiscount}" data-id="${d.id}">
+                                ${d.discountName} - Giảm <fmt:formatNumber value="${d.percentDiscount}" maxFractionDigits="0"/>%
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
             <div class="discount">
-                <input type="text" placeholder="Mã giảm giá" name="discount">
-                <button>Sử dụng</button>
+                <input type="text" placeholder="Nhập mã giảm giá" name="discount" id="discount-input">
+
+                <button id="apply-btn">Sử dụng</button>
             </div>
 
             <div class="summary-line">
                 <span>Tạm tính</span>
                 <span>
                  <fmt:formatNumber value="${sessionScope.cart.total}" type="currency" currencySymbol="đ" maxFractionDigits="0"/>
-            </span>
+                </span>
+            </div>
+
+            <div class="summary-line" id="discount-line" style="display: none;">
+                <span>Giảm giá (<span id="discount-percent-display"></span>%)</span>
+                <span id="discount-amount-display">-0đ</span>
             </div>
 
             <div class="summary-line">
@@ -392,13 +433,29 @@
 
     // Hàm chạy khi click chọn ship
     function updateTotal(radioInput) {
-        // lấy giá ship từ cái thẻ vừa bấm
-        const shippingFee = parseFloat(radioInput.getAttribute('data-price'));
+        let shippingFee = 0;
+        if (radioInput) {
+            shippingFee = parseFloat(radioInput.getAttribute('data-price'));
+            document.getElementById('ship-fee-display').innerText = formatVND(shippingFee);
+        }
 
-        // tính tổng mới
-        const finalTotal = cartTotal + shippingFee;
+        // Tính tiền được giảm
+        const discountAmount = (cartTotal * currentDiscountPercent) / 100;
+        const discountLine = document.getElementById('discount-line');
 
-        document.getElementById('ship-fee-display').innerText = formatVND(shippingFee);
+        // Hiển thị hoặc ẩn dòng "Giảm giá" trên màn hình
+        if (currentDiscountPercent > 0) {
+            discountLine.style.display = "flex"; // Hiện
+            document.getElementById('discount-percent-display').innerText = currentDiscountPercent;
+            document.getElementById('discount-amount-display').innerText = "-" + formatVND(discountAmount);
+        } else {
+            discountLine.style.display = "none"; // Ẩn
+        }
+
+        // Tính tổng cộng
+        let finalTotal = cartTotal - discountAmount + shippingFee;
+        if (finalTotal < 0) finalTotal = 0;
+
         document.getElementById('total-price-display').innerText = formatVND(finalTotal);
     }
 
@@ -411,6 +468,46 @@
         const checkedRadio = document.querySelector('input[name="delivery"]:checked');
         if(checkedRadio) updateTotal(checkedRadio);
     }
+
+    let currentDiscountPercent = 0; // Biến lưu phần trăm giảm giá hiện tại
+
+    // Hàm tự động điền mã khi người dùng chọn từ Dropdown
+    function selectDiscount() {
+        const select = document.getElementById('discount-select');
+        const input = document.getElementById('discount-input');
+        if (select.value !== "") {
+            input.value = select.value;
+        } else {
+            input.value = "";
+        }
+    }
+
+    // Xử lý khi bấm nút "Sử dụng"
+    document.getElementById('apply-btn').addEventListener('click', function(e) {
+        e.preventDefault(); // Ngăn form bị submit tải lại trang
+
+        const inputCode = document.getElementById('discount-input').value.trim().toUpperCase();
+        const select = document.getElementById('discount-select');
+        let found = false;
+
+        if (inputCode === "") {
+            alert("Vui lòng nhập hoặc chọn mã giảm giá!");
+            return;
+        }
+
+        // Tìm mã giảm giá trong danh sách dropdown
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value.toUpperCase() === inputCode) {
+                currentDiscountPercent = parseFloat(select.options[i].getAttribute('data-percent'));
+                document.getElementById('appliedDiscountId').value = select.options[i].getAttribute('data-id');
+                found = true;
+                break;
+            }
+        }
+
+        // Gọi lại hàm tính tiền
+        updateTotal(document.querySelector('input[name="delivery"]:checked'));
+    });
 </script>
 
 
