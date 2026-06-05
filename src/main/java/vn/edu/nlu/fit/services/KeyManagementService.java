@@ -4,6 +4,7 @@ import vn.edu.nlu.fit.dao.UserKeyDAO;
 import vn.edu.nlu.fit.model.UserKey;
 
 import java.security.KeyPair;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,7 @@ public class KeyManagementService {
             UserKey userKey = new UserKey();
             userKey.setUserId(userId);
             userKey.setPublicKey(publicKeyPem);
-            userKey.setCreatedAt(LocalDateTime.now());
+            userKey.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             userKey.setActive(true);
 
             int keyId = userKeyDAO.insert(userKey);
@@ -55,7 +56,7 @@ public class KeyManagementService {
             Map<String, Object> result = new HashMap<>();
             result.put("publicKeyPem", publicKeyPem);
             result.put("keyId", keyId);
-            result.put("generatedAt", LocalDateTime.now());
+            result.put("generatedAt", new Timestamp(System.currentTimeMillis()));
 
             // Attempt to clear private key material references (best-effort)
             RSAService.clearKey(keyPair.getPrivate());
@@ -128,7 +129,7 @@ public class KeyManagementService {
         UserKey userKey = new UserKey();
         userKey.setUserId(userId);
         userKey.setPublicKey(publicKeyPem);
-        userKey.setCreatedAt(LocalDateTime.now());
+        userKey.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userKey.setActive(true);
 
         return userKeyDAO.insert(userKey);

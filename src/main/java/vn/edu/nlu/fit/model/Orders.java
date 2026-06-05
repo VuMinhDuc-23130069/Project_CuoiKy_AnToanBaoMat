@@ -21,6 +21,7 @@ public class Orders {
     private String note;
     private String orderHash;
     private String digitalSignature;
+    private boolean altered = false;
 
     public Orders(int id, String fullName, String phone, String email, double total, Timestamp orderDate,
             String orderAddress, int orderStatus, int userID, int deliveryMethodID, String deliveryMethod,
@@ -120,18 +121,11 @@ public class Orders {
         this.digitalSignature = digitalSignature;
     }
 
-    // ✅ Sửa thành
-    public String getFullname() {
+    public String getFullName() {
         return fullName;
     }
 
-    // ✅ Thêm dòng này
     public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    // ✅ Thêm dòng này
-    public void setFullname(String fullName) {
         this.fullName = fullName;
     }
 
@@ -177,6 +171,14 @@ public class Orders {
 
     public void setShippingFee(double shippingFee) {
         this.shippingFee = shippingFee;
+    }
+
+    public boolean isAltered() {
+        return altered;
+    }
+
+    public void setAltered(boolean altered) {
+        this.altered = altered;
     }
 
     @Override
