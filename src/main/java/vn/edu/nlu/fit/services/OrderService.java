@@ -12,4 +12,26 @@ public class OrderService {
     public List<Orders> getOrdersByUser(int userId) {
         return orderDAO.findByUserId(userId);
     }
+
+    public void createHashForOrder(int orderId) {
+        try {
+            Orders order = orderDAO.getOrderById(orderId);
+
+            if (order == null) {
+                System.out.println("Order null");
+                return;
+            }
+
+            System.out.println("Order = " + order);
+
+            String hash = ChuKySoService.hashOrderInfo(order);
+
+            System.out.println("Hash = " + hash);
+
+            orderDAO.updateOrderHash(orderId, hash);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

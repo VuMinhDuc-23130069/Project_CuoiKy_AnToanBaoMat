@@ -12,35 +12,41 @@ import vn.edu.nlu.fit.dao.DiscountDAO;
 import vn.edu.nlu.fit.dao.OrderDAO;
 import vn.edu.nlu.fit.dao.PaymentMethodDao;
 import vn.edu.nlu.fit.model.Discounts;
+import vn.edu.nlu.fit.model.Orders;
 import vn.edu.nlu.fit.model.Users;
+import vn.edu.nlu.fit.services.OrderService;
 
 import java.io.IOException;
 
 @WebServlet(name = "OrderController", value = "/Order")
 public class OrderController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.sendRedirect("GioHang.jsp");
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
 
-        //kiểm giỏ trc khi đi
+        // kiểm giỏ trc khi đi
         if (cart == null || cart.getTotalQuantity() == 0) {
             response.sendRedirect("GioHang.jsp");
             return;
         }
 
-        //lấy pttt và ptvc
+        // lấy pttt và ptvc
         String paymentId = request.getParameter("paymentId");
         String deliveryId = request.getParameter("delivery");
 
         // Hứng ID mã giảm giá từ form
         String appliedDiscountIdStr = request.getParameter("appliedDiscountId");
-        Integer discountId = (appliedDiscountIdStr != null && !appliedDiscountIdStr.trim().isEmpty()) ? Integer.parseInt(appliedDiscountIdStr) : null;
+        Integer discountId = (appliedDiscountIdStr != null && !appliedDiscountIdStr.trim().isEmpty())
+                ? Integer.parseInt(appliedDiscountIdStr)
+                : null;
 
         int shipId = Integer.parseInt(deliveryId);
 
@@ -66,7 +72,8 @@ public class OrderController extends HttpServlet {
 
         // Tính tổng tiền cuối cùng
         double finalTotal = cart.getTotal() - discountAmount + shippingFee;
-        if (finalTotal < 0) finalTotal = 0;
+        if (finalTotal < 0)
+            finalTotal = 0;
 
         // lấy từ hàm dopost đã vết bên checkoutcontroller
         String name = (String) session.getAttribute("order_name");
@@ -91,35 +98,42 @@ public class OrderController extends HttpServlet {
             PaymentMethodDao paymentDao = new PaymentMethodDao();
             String paymentName = paymentDao.getPaymentMehthodNameById(Integer.parseInt(paymentId));
 
-
-            //guwirr dl đi
+            // guwirr dl đi
             request.setAttribute("orderId", "#" + orderId);
             request.setAttribute("customerName", name);
             request.setAttribute("customerPhone", phone);
             request.setAttribute("customerEmail", email);
             request.setAttribute("customerAddress", address);
-            //gửi giỏ hàng sang request để jsp hiển thị lần cuối
+            // gửi giỏ hàng sang request để jsp hiển thị lần cuối
             request.setAttribute("finalCart", cart);
-            //gửi qua dathangthnagcong
+            // gửi qua dathangthnagcong
             request.setAttribute("shippingFee", shippingFee);
             request.setAttribute("totalMoney", finalTotal);
-            //pttt
+            // pttt
             request.setAttribute("paymentMethodName", paymentName);
             request.setAttribute("discountAmount", discountAmount);
             request.setAttribute("percentDiscount", percentDiscount);
-            //mua xong xóa đi
+            // mua xong xóa đi
             session.removeAttribute("cart");
             session.removeAttribute("order_name");
             session.removeAttribute("order_phone");
             session.removeAttribute("order_address");
             session.removeAttribute("order_email");
-            //note
+            // note
             session.removeAttribute("ORDER_NOTE");
 
-            //chuyển trang
+            OrderService orderService = new OrderService();
+            orderService.createHashForOrder(orderId);
+            // ✅ THÊM DÒNG NÀY - lấy hash vừa tạo gửi sang JSP
+            Orders orderWithHash = orderDAO.getOrderById(orderId);
+            request.setAttribute("orderHash", orderWithHash.getOrderHash());
+            // chuyển trang
             request.getRequestDispatcher("DatHangThanhCong.jsp").forward(request, response);
         } else {
             response.getWriter().println("Lỗi hệ thống! Không thể tạo đơn hàng.");
         }
+        System.out.println("ORDER CREATED: " + orderId);
     }
+
+    
 }

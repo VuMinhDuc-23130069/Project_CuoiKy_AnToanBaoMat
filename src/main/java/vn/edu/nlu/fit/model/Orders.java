@@ -10,7 +10,7 @@ public class Orders {
     private double total;
     private Timestamp orderDate;
     private String orderAddress;
-    private int  orderStatus;
+    private int orderStatus;
     private int userID;
     private int deliveryMethodID;
     private String deliveryMethod;
@@ -19,9 +19,12 @@ public class Orders {
     private double shippingFee;
     private String discountName;
     private String note;
+    private String orderHash;
+    private String digitalSignature;
 
-
-    public Orders(int id, String fullName, String phone, String email, double total, Timestamp orderDate, String orderAddress, int orderStatus, int userID, int deliveryMethodID, String deliveryMethod, int paymentMethodID, int discountID, double shippingFee) {
+    public Orders(int id, String fullName, String phone, String email, double total, Timestamp orderDate,
+            String orderAddress, int orderStatus, int userID, int deliveryMethodID, String deliveryMethod,
+            int paymentMethodID, int discountID, double shippingFee) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
@@ -41,7 +44,6 @@ public class Orders {
     public Orders() {
     }
 
-
     public int getId() {
         return id;
     }
@@ -58,11 +60,11 @@ public class Orders {
         this.total = total;
     }
 
-    public Timestamp  getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Timestamp  orderDate) {
+    public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -74,11 +76,11 @@ public class Orders {
         this.orderAddress = orderAddress;
     }
 
-    public int  getOrderStatus() {
+    public int getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(int  orderStatus) {
+    public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -102,11 +104,34 @@ public class Orders {
         return discountID;
     }
 
-    public String getFullName() {
+    public String getOrderHash() {
+        return orderHash;
+    }
+
+    public void setOrderHash(String orderHash) {
+        this.orderHash = orderHash;
+    }
+
+    public String getDigitalSignature() {
+        return digitalSignature;
+    }
+
+    public void setDigitalSignature(String digitalSignature) {
+        this.digitalSignature = digitalSignature;
+    }
+
+    // ✅ Sửa thành
+    public String getFullname() {
         return fullName;
     }
 
+    // ✅ Thêm dòng này
     public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    // ✅ Thêm dòng này
+    public void setFullname(String fullName) {
         this.fullName = fullName;
     }
 
@@ -175,31 +200,46 @@ public class Orders {
 
     public String getStatusDescription() {
         switch (this.orderStatus) {
-            case 1: return "Chờ xác nhận";
-            case 2: return "Đang vận chuyển";
-            case 3: return "Đã giao hàng";
-            case 4: return "Đã hủy";
-            default: return "Đang xử lý";
+            case 1:
+                return "Chờ xác nhận";
+            case 2:
+                return "Đang vận chuyển";
+            case 3:
+                return "Đã giao hàng";
+            case 4:
+                return "Đã hủy";
+            default:
+                return "Đang xử lý";
         }
     }
 
     public Timestamp getOrderDateAsDate() {
-        if (orderDate == null) return null;
+        if (orderDate == null)
+            return null;
         return Timestamp.valueOf(String.valueOf(orderDate));
     }
 
-    public String getDiscountName() { return discountName; }
-    public void setDiscountName(String discountName) { this.discountName = discountName; }
+    public String getDiscountName() {
+        return discountName;
+    }
+
+    public void setDiscountName(String discountName) {
+        this.discountName = discountName;
+    }
 
     public String getPaymentMethodName() {
-        if (this.paymentMethodID == 1) return "Thanh toán khi giao hàng (COD)";
-        if (this.paymentMethodID == 2) return "Chuyển khoản qua ngân hàng";
+        if (this.paymentMethodID == 1)
+            return "Thanh toán khi giao hàng (COD)";
+        if (this.paymentMethodID == 2)
+            return "Chuyển khoản qua ngân hàng";
         return "Chưa xác nhận";
     }
 
     public String getDeliveryMethodName() {
-        if (this.deliveryMethodID == 1) return "Giao hàng tận nơi";
-        if (this.deliveryMethodID == 2) return "Hỏa tốc";
+        if (this.deliveryMethodID == 1)
+            return "Giao hàng tận nơi";
+        if (this.deliveryMethodID == 2)
+            return "Hỏa tốc";
         return "Vận chuyển thường";
     }
 

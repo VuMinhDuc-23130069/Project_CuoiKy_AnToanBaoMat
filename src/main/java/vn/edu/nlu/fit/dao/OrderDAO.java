@@ -8,134 +8,187 @@ import vn.edu.nlu.fit.model.Products_Orders;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class OrderDAO extends BaseDao{
-    //tìm user id tướng ứng vs  order_date hiện sp đã đặt
-    public List<Orders> findByUserId(int userId) {
-        String sql = """
-                    SELECT *
-                    FROM orders
-                    WHERE user_id = :userId
-                    ORDER BY order_date DESC
-                """;
+public class OrderDAO extends BaseDao {
+        // tìm user id tướng ứng vs order_date hiện sp đã đặt
+        public List<Orders> findByUserId(int userId) {
+                String sql = """
+                                    SELECT *
+                                    FROM orders
+                                    WHERE user_id = :userId
+                                    ORDER BY order_date DESC
+                                """;
 
-        return getJdbi().withHandle(h ->
-                h.createQuery(sql)
-                        .bind("userId", userId)
-                        .mapToBean(Orders.class)
-                        .list()
-        );
-    }
+                return getJdbi().withHandle(h -> h.createQuery(sql)
+                                .bind("userId", userId)
+                                .mapToBean(Orders.class)
+                                .list());
+        }
 
-    public int createOrder(String name, String phone, String email, String address,
-                           int deliveryId, int paymentId, double totalMoney, Integer userId, Cart cart, String note, Integer discountId) {
+        public int createOrder(String name, String phone, String email, String address,
+                        int deliveryId, int paymentId, double totalMoney, Integer userId, Cart cart, String note,
+                        Integer discountId) {
 
-        return getJdbi().inTransaction(handle -> {
-            try {
-                // Cập nhật câu lệnh SQL có thêm trường discount_id
-                String sqlOrder = "INSERT INTO orders " +
-                        "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note, discount_id) " +
-                        "VALUES " +
-                        "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note, :discountId)";
+                return getJdbi().inTransaction(handle -> {
+                        try {
+                                // Cập nhật câu lệnh SQL có thêm trường discount_id
+                                String sqlOrder = "INSERT INTO orders " +
+                                                "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note, discount_id) "
+                                                +
+                                                "VALUES " +
+                                                "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note, :discountId)";
 
-                int orderId = handle.createUpdate(sqlOrder)
-                        .bind("name", name)
-                        .bind("phone", phone)
-                        .bind("email", email)
-                        .bind("total", totalMoney)
-                        .bind("date", new Timestamp(System.currentTimeMillis()))
-                        .bind("address", address)
-                        .bind("status", 1)
-                        .bind("userId", userId)
-                        .bind("deliveryId", deliveryId)
-                        .bind("paymentId", paymentId)
-                        .bind("note", note)
-                        .bind("discountId", discountId) // Lưu ID mã giảm giá (có thể null)
-                        .executeAndReturnGeneratedKeys("id")
-                        .mapTo(Integer.class)
-                        .one();
+                                int orderId = handle.createUpdate(sqlOrder)
+                                                .bind("name", name)
+                                                .bind("phone", phone)
+                                                .bind("email", email)
+                                                .bind("total", totalMoney)
+                                                .bind("date", new Timestamp(System.currentTimeMillis()))
+                                                .bind("address", address)
+                                                .bind("status", 1)
+                                                .bind("userId", userId)
+                                                .bind("deliveryId", deliveryId)
+                                                .bind("paymentId", paymentId)
+                                                .bind("note", note)
+                                                .bind("discountId", discountId) // Lưu ID mã giảm giá (có thể null)
+                                                .executeAndReturnGeneratedKeys("id")
+                                                .mapTo(Integer.class)
+                                                .one();
 
-                // Lưu chi tiết đơn hàng
-                String sqlDetail = "INSERT INTO products_orders " +
-                        "(order_id, product_id, product_name, quantity, price_at_time) " +
-                        "VALUES " +
-                        "(:orderId, :productId, :productName, :quantity, :price)";
+                                // Lưu chi tiết đơn hàng
+                                String sqlDetail = "INSERT INTO products_orders " +
+                                                "(order_id, product_id, product_name, quantity, price_at_time) " +
+                                                "VALUES " +
+                                                "(:orderId, :productId, :productName, :quantity, :price)";
 
-                for (CartItem item : cart.getItem()) {
-                    handle.createUpdate(sqlDetail)
-                            .bind("orderId", orderId)
-                            .bind("productId", item.getProduct().getId())
-                            .bind("productName",item.getProduct().getProductName())
-                            .bind("quantity", item.getQuantity())
-                            .bind("price", item.getProduct().getPrice())
-                            .execute();
-                }
+                                for (CartItem item : cart.getItem()) {
+                                        handle.createUpdate(sqlDetail)
+                                                        .bind("orderId", orderId)
+                                                        .bind("productId", item.getProduct().getId())
+                                                        .bind("productName", item.getProduct().getProductName())
+                                                        .bind("quantity", item.getQuantity())
+                                                        .bind("price", item.getProduct().getPrice())
+                                                        .execute();
+                                }
 
-                // --- THÊM LOGIC TRỪ SỐ LƯỢNG MÃ GIẢM GIÁ ---
-                if (discountId != null) {
-                    handle.createUpdate("UPDATE discounts SET quantity = quantity - 1 WHERE id = :discountId AND quantity > 0")
-                            .bind("discountId", discountId)
-                            .execute();
-                }
+                                // --- THÊM LOGIC TRỪ SỐ LƯỢNG MÃ GIẢM GIÁ ---
+                                if (discountId != null) {
+                                        handle.createUpdate(
+                                                        "UPDATE discounts SET quantity = quantity - 1 WHERE id = :discountId AND quantity > 0")
+                                                        .bind("discountId", discountId)
+                                                        .execute();
+                                }
 
-                return orderId;
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException("Lỗi tạo đơn hàng: " + e.getMessage());
-            }
-        });
-    }
+                                return orderId;
+                        } catch (Exception e) {
+                                e.printStackTrace();
+                                throw new RuntimeException("Lỗi tạo đơn hàng: " + e.getMessage());
+                        }
+                });
+        }
 
-    //DS đơn hàng của người mua đã đăng nhập
-    public List<Orders> getOrdersByUserId(int userId) {
-        String sql = "SELECT o.id, o.user_id AS userID, o.total AS total, o.order_status AS orderStatus, " +
-                "o.order_date AS orderDate, " +
-                "o.order_address AS orderAddress, " +
-                "o.fullName AS fullName, o.phone, o.email, d.method_name as deliveryMethod " +
-                "FROM orders o left join deliverymethods d on o.delivery_method_id = d.id  " +
-                "WHERE user_id = :userId " +
-                "ORDER BY order_date DESC";
-        return getJdbi().withHandle(handle ->
-                handle.createQuery(sql).bind("userId", userId).mapToBean(Orders.class).list());
-    }
+        // DS đơn hàng của người mua đã đăng nhập
+        public List<Orders> getOrdersByUserId(int userId) {
+                String sql = "SELECT o.id, o.user_id AS userID, o.total AS total, o.order_status AS orderStatus, " +
+                                "o.order_date AS orderDate, " +
+                                "o.order_address AS orderAddress, " +
+                                "o.fullName AS fullName, o.phone, o.email, d.method_name as deliveryMethod " +
+                                "FROM orders o left join deliverymethods d on o.delivery_method_id = d.id  " +
+                                "WHERE user_id = :userId " +
+                                "ORDER BY order_date DESC";
+                return getJdbi().withHandle(handle -> handle.createQuery(sql).bind("userId", userId)
+                                .mapToBean(Orders.class).list());
+        }
 
-    //Lấy 1 đơn làm chi tiết đơn hàng
-    public Orders getOrdersById(int orderId) {
-        String sql = "SELECT o.id, o.user_id AS userID, o.total AS total, o.order_status AS orderStatus, " +
-                "o.order_date AS orderDate, " +
-                "o.order_address AS orderAddress, " +
-                "o.fullName AS fullName, o.phone, o.email, d.method_name as deliveryMethod, d.price AS shippingFee " +
-                "FROM orders o left join deliverymethods d on o.delivery_method_id = d.id  " +
-                "WHERE o.id = :orderId";
+        // Lấy 1 đơn làm chi tiết đơn hàng
+        public Orders getOrdersById(int orderId) {
+                String sql = "SELECT o.id, o.user_id AS userID, o.total AS total, o.order_status AS orderStatus, " +
+                                "o.order_date AS orderDate, " +
+                                "o.order_address AS orderAddress, " +
+                                "o.fullName AS fullName, o.phone, o.email, d.method_name as deliveryMethod, d.price AS shippingFee "
+                                +
+                                "FROM orders o left join deliverymethods d on o.delivery_method_id = d.id  " +
+                                "WHERE o.id = :orderId";
 
-        return getJdbi().withHandle(handle ->
-                handle.createQuery(sql)
-                        .bind("orderId", orderId)
-                        .mapToBean(Orders.class)
-                        .findOne()
-                        .orElse(null));
-    }
+                return getJdbi().withHandle(handle -> handle.createQuery(sql)
+                                .bind("orderId", orderId)
+                                .mapToBean(Orders.class)
+                                .findOne()
+                                .orElse(null));
+        }
 
-    //Hủy đơn
-    public boolean cancelOrder(int orderId) {
-        String sql = "update orders SET order_status = 4 WHERE id = :orderId AND order_status = 1";
-        int rowsAffected = getJdbi().withHandle(handle ->
-                handle.createUpdate(sql).bind("orderId", orderId).execute());
-        return rowsAffected > 0;
-    }
+        // Hủy đơn
+        public boolean cancelOrder(int orderId) {
+                String sql = "update orders SET order_status = 4 WHERE id = :orderId AND order_status = 1";
+                int rowsAffected = getJdbi()
+                                .withHandle(handle -> handle.createUpdate(sql).bind("orderId", orderId).execute());
+                return rowsAffected > 0;
+        }
 
-    // Lấy danh sách sản phẩm trong đơn
-    public List<Products_Orders> getOrderDetails(int orderId) {
-        String sql = "SELECT " +
-                "od.order_id AS orderID, od.product_id AS productID, od.quantity, " +
-                "od.price_at_time AS priceAtTime, p.product_name AS productName, p.image_url AS productImg " +
-                "FROM products_orders od JOIN products p ON od.product_id = p.id " +
-                "WHERE od.order_id = :orderId";
+        // Lấy danh sách sản phẩm trong đơn
+        public List<Products_Orders> getOrderDetails(int orderId) {
+                String sql = "SELECT " +
+                                "od.order_id AS orderID, od.product_id AS productID, od.quantity, " +
+                                "od.price_at_time AS priceAtTime, p.product_name AS productName, p.image_url AS productImg "
+                                +
+                                "FROM products_orders od JOIN products p ON od.product_id = p.id " +
+                                "WHERE od.order_id = :orderId";
 
-        return getJdbi().withHandle(handle ->
-                handle.createQuery(sql)
-                        .bind("orderId", orderId)
-                        .mapToBean(Products_Orders.class)
-                        .list());
-    }
+                return getJdbi().withHandle(handle -> handle.createQuery(sql)
+                                .bind("orderId", orderId)
+                                .mapToBean(Products_Orders.class)
+                                .list());
+        }
+
+        // Lấy order kèm order_hash và digital_signature
+        public Orders getOrderById(int orderId) {
+                String sql = "SELECT o.id, o.fullName AS fullName, o.phone, o.email, " +
+                                "o.total, o.order_date AS orderDate, " +
+                                "o.order_address AS orderAddress, " +
+                                "o.order_status AS orderStatus, " +
+                                "o.user_id AS userID, " +
+                                "o.delivery_method_id AS deliveryMethodID, " +
+                                "o.payment_method_id AS paymentMethodID, " +
+                                "o.discount_id AS discountID, " +
+                                "o.note, " +
+                                "o.order_hash AS orderHash, " +
+                                "o.digital_signature AS digitalSignature, " +
+                                "d.method_name AS deliveryMethod, " +
+                                "d.price AS shippingFee " +
+                                "FROM orders o " +
+                                "LEFT JOIN deliverymethods d ON o.delivery_method_id = d.id " +
+                                "WHERE o.id = :orderId";
+
+                return getJdbi().withHandle(handle -> handle.createQuery(sql)
+                                .bind("orderId", orderId)
+                                .mapToBean(Orders.class)
+                                .findOne()
+                                .orElse(null));
+        }
+
+        public void updateOrderHash(int orderId, String hash) {
+                System.out.println("UPDATE HASH");
+                System.out.println("OrderID = " + orderId);
+                System.out.println("Hash = " + hash);
+
+                String sql = "UPDATE orders SET order_hash = :hash WHERE id = :orderId";
+
+                getJdbi().useHandle(handle -> {
+                        int rows = handle.createUpdate(sql)
+                                        .bind("hash", hash)
+                                        .bind("orderId", orderId)
+                                        .execute();
+
+                        System.out.println("Rows updated = " + rows);
+                });
+        }
+
+        // Lưu chữ ký vào cột digital_signature
+        public void updateSignature(int orderId, String signature) {
+                String sql = "UPDATE orders SET digital_signature = :signature WHERE id = :orderId";
+                getJdbi().useHandle(handle -> handle.createUpdate(sql)
+                                .bind("signature", signature)
+                                .bind("orderId", orderId)
+                                .execute());
+        }
 
 }
