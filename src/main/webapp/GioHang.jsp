@@ -808,6 +808,23 @@
                                     <button type="button" class="btn btn-outline-primary key-action-btn" onclick="downloadPublicKey()">
                                         <i class="fas fa-download"></i> Tải khóa công khai
                                     </button>
+                                    <button type="button" class="btn btn-outline-secondary key-action-btn" onclick="toggleEmailSection()">
+                                        <i class="fas fa-envelope"></i> Gửi qua Email
+                                    </button>
+                                </div>
+
+                                <!-- Email Key Section (Hidden by default) -->
+                                <div id="emailKeySection" class="email-key-section" style="display: none; margin-top: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
+                                    <p style="font-size: 13px; color: #666; margin-bottom: 10px;">
+                                        Nhập email để nhận file khóa riêng tư (Private Key).
+                                        <br><small style="color: #e74c3c;">Lưu ý: Hành động này sẽ tạo cặp khóa mới.</small>
+                                    </p>
+                                    <div class="input-group" style="display: flex; gap: 10px;">
+                                        <input type="email" id="emailForKey" class="form-control" placeholder="example@email.com" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        <button type="button" class="btn btn-success" onclick="sendPrivateKeyViaEmail()" style="background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+                                            Gửi ngay
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1183,7 +1200,7 @@
          /**
           * Generate new RSA key pair
           */
-         function generateKeyPair() {
+         function generateKeyPair(email = null) {
              const btn = document.getElementById('generateKeyBtn');
              const originalText = btn.innerHTML;
 
@@ -1213,12 +1230,24 @@
              input.value = 'Key from Shopping Cart - ' + new Date().toLocaleString('vi-VN');
              form.appendChild(input);
 
+             if (email) {
+                 const emailInput = document.createElement('input');
+                 emailInput.type = 'hidden';
+                 emailInput.name = 'email';
+                 emailInput.value = email;
+                 form.appendChild(emailInput);
+             }
+
              document.body.appendChild(form);
              form.submit();
 
              // Small delay to allow download to start then refresh status and UI
              setTimeout(() => {
-                 showMessage('success', 'Khóa RSA đã được tạo và đang được tải xuống. Vui lòng lưu nó ở nơi an toàn.');
+                 let msg = 'Khóa RSA đã được tạo và đang được tải xuống. Vui lòng lưu nó ở nơi an toàn.';
+                 if (email) {
+                     msg += ' Đồng thời khóa riêng tư đã được gửi tới ' + email;
+                 }
+                 showMessage('success', msg);
                  loadKeyStatus();
                  btn.disabled = false;
                  btn.innerHTML = originalText;
@@ -1296,41 +1325,13 @@
              }
 
               // Confirm with user
-              if (!confirm('Gửi khóa riêng tư tới: ' + email + '?\n\nChắc chắn địa chỉ email là chính xác trước khi tiếp tục.')) {
+              if (!confirm('Hành động này sẽ TẠO MỚI cặp khóa RSA và gửi khóa riêng tư tới: ' + email + '?\n\nCặp khóa cũ sẽ bị vô hiệu hóa.')) {
                   return;
               }
 
-             const btn = event.target;
-             const originalText = btn.innerHTML;
-
-             btn.disabled = true;
-             btn.innerHTML = '<span class="loading-spinner"></span> Đang gửi...';
-
-             fetch('${pageContext.request.contextPath}/send-private-key', {
-                 method: 'POST',
-                 headers: {
-                     'Content-Type': 'application/x-www-form-urlencoded'
-                 },
-                 body: 'email=' + encodeURIComponent(email)
-             })
-             .then(response => response.json())
-             .then(data => {
-                 if (data.success) {
-                     showMessage('success', 'Khóa riêng tư đã được gửi tới ' + email + '!');
-                     document.getElementById('emailKeySection').style.display = 'none';
-                     emailInput.value = '';
-                 } else {
-                     showMessage('error', 'Lỗi: ' + (data.error || 'Không thể gửi email'));
-                 }
-             })
-             .catch(error => {
-                 console.error('Error sending private key:', error);
-                 showMessage('error', 'Lỗi kết nối. Vui lòng thử lại.');
-             })
-             .finally(() => {
-                 btn.disabled = false;
-                 btn.innerHTML = originalText;
-             });
+             generateKeyPair(email);
+             document.getElementById('emailKeySection').style.display = 'none';
+             emailInput.value = '';
          }
 
          /**
