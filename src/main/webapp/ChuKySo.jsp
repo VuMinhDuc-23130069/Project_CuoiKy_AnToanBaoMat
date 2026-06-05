@@ -593,7 +593,7 @@
                                             style="font-size: 16px; font-weight: 700; color: #2c1c12; margin-bottom: 5px;">
                                             Tải công cụ hỗ trợ ký số dữ liệu
                                         </h5>
-                                        <p class="mb-md-0" style="font-size: 14px; color: #555; line-height: 1.4;">
+                                        <p class="mb-md-0" style="font-size: 15px; color: #555; line-height: 1.4;">
                                             Để đảm bảo an toàn, việc tạo khóa và ký số được thực hiện Offline trên máy
                                             tính cá nhân.
                                             Vui lòng tải bộ cài đặt của hệ thống (hỗ trợ Windows).
