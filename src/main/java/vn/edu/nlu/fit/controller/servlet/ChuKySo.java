@@ -45,39 +45,32 @@ public class ChuKySo extends HttpServlet {
             response.sendRedirect("ChuKySo");
             return ;
         }
-        // ✅ Lưu chữ ký
+        // Lưu chữ ký
         if ("signOrder".equals(action)) {
             String orderIdStr = request.getParameter("order_id");
             String uploadedSignature = request.getParameter("signature");
+
+            response.setContentType("text/plain; charset=UTF-8");
 
             try {
                 int orderId = Integer.parseInt(orderIdStr);
                 OrderDAO orderDAO = new OrderDAO();
                 Orders order = orderDAO.getOrderById(orderId);
 
-                if (order == null) {
-                    session.setAttribute("error", "Không tìm thấy đơn hàng #" + orderId);
-                    response.sendRedirect("ChuKySo");
-                    return;
-                }
-
                 if (uploadedSignature == null || uploadedSignature.trim().isEmpty()) {
-                    session.setAttribute("error", "Vui lòng nhập chữ ký!");
-                    response.sendRedirect("ChuKySo");
+                    response.getWriter().write("error: Vui lòng nhập chữ ký!");
                     return;
                 }
 
                 orderDAO.updateSignature(orderId, uploadedSignature.trim());
-                session.setAttribute("message", " Đã lưu chữ ký cho đơn hàng #" + orderId);
+                response.getWriter().write("success");
 
             } catch (NumberFormatException e) {
-                session.setAttribute("error", "Mã đơn hàng không hợp lệ!");
+                response.getWriter().write("error: Mã đơn hàng không hợp lệ!");
             } catch (Exception e) {
                 e.printStackTrace();
-                session.setAttribute("error", "Lỗi: " + e.getMessage());
+                response.getWriter().write("error: Lỗi Server: " + e.getMessage());
             }
-
-            response.sendRedirect("ChuKySo");
         }
     }
     

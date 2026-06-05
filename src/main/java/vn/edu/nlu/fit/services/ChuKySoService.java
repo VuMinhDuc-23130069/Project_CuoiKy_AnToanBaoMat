@@ -32,7 +32,7 @@ public class ChuKySoService {
     public static String hashOrderInfo(Orders order) throws Exception {
     // Băm: mã đơn | tên | sdt | địa chỉ | khuyến mãi | pttt | thời gian | tổng tiền
     String data = order.getId()
-            + "|" + order.getFullname()
+            + "|" + order.getFullName()
             + "|" + order.getPhone()
             + "|" + order.getOrderAddress()
             + "|" + order.getDiscountID()

@@ -533,6 +533,7 @@
                     <!--Đang vận chuyển-->
                     <!--Đã giao hàng-->
                     <!--Đã hủy-->
+                    <li class="cate-item">Bảo mật</li>
                     <li class="cate-item">Hành động</li>
                 </ul>
 
@@ -555,6 +556,17 @@
                                 <c:when test="${o.orderStatus == 2}"><span style="color: blue;">Đang vận chuyển</span></c:when>
                                 <c:when test="${o.orderStatus == 3}"><span style="color: green;">Đã giao hàng</span></c:when>
                                 <c:when test="${o.orderStatus == 4}"><span style="color: red;">Đã hủy</span></c:when>
+                            </c:choose>
+                        </li>
+
+                        <li class="cate-item" style="text-align: center;">
+                            <c:choose>
+                                <c:when test="${o.altered}">
+                                    <i class="fa-solid fa-circle-xmark" style="color: #dc3545; font-size: 20px;" title="Dữ liệu đã bị thay đổi!"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fa-solid fa-circle-check" style="color: #28a745; font-size: 20px;" title="Toàn vẹn dữ liệu"></i>
+                                </c:otherwise>
                             </c:choose>
                         </li>
 
