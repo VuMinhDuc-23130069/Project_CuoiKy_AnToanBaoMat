@@ -225,6 +225,130 @@
                             width: 100%;
                         }
                     }
+
+                    /* Nút bấm */
+                    .ds-btn {
+                        display: inline-block; padding: 8px 16px; font-size: 14px; border-radius: 4px;
+                        cursor: pointer; text-decoration: none; border: none; transition: all 0.2s;
+                    }
+                    .ds-btn-primary { background-color: #007bff; color: #fff; margin-top: 5px; }
+                    .ds-btn-primary:hover { background-color: #0069d9; }
+
+                    /* Form nhập chữ ký */
+                    .sign-order-form { margin-top: 15px; }
+                    .form-control {
+                        border: 1px solid #ced4da; border-radius: 4px; padding: 10px;
+                        font-size: 14px; color: #333; background: #fff; width: 100%; box-sizing: border-box;
+                        font-family: monospace; resize: vertical; min-height: 100px;
+                    }
+                    .form-control:focus {
+                        border-color: #007bff;
+                        outline: none;
+                        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);}
+
+                    .sign-box-container {
+                        margin: 20px 0;
+                        padding: 20px;
+                        background: #f8f9fa;
+                        border: 1px solid #dee2e6;
+                        border-radius: 8px;
+                    }
+
+                    .tool-download-box {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: #fff;
+                        padding: 15px;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 6px;
+                        margin-bottom: 20px;
+                    }
+
+                    .tool-title {
+                        font-size: 16px;
+                        font-weight: 700;
+                        color: #2c1c12;
+                        margin: 0 0 5px 0;
+                    }
+
+                    .tool-desc {
+                        font-size: 13px;
+                        color: #555;
+                        margin: 0;
+                    }
+
+                    .btn-download-tool {
+                        background-color: #28a745;
+                        color: white;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        margin-left: 15px;
+                    }
+
+                    .btn-download-tool:hover {
+                        background-color: #218838;
+                        color: white;
+                    }
+
+                    .sign-title {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #2c1c12;
+                        margin: 0 0 10px 0;
+                    }
+
+                    .sign-guide {
+                        margin: 0 0 10px 0;
+                        font-size: 14px;
+                        color: #444;
+                    }
+
+                    .hash-display-box {
+                        background: #fff;
+                        border: 1px dashed #007bff;
+                        padding: 12px;
+                        border-radius: 4px;
+                        word-break: break-all;
+                        font-family: monospace;
+                        font-size: 14px;
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+
+                    .btn-copy-hash {
+                        padding: 6px 16px;
+                        cursor: pointer;
+                        border: 1px solid #007bff;
+                        border-radius: 4px;
+                        background: #e6f2ff;
+                        font-size: 13px;
+                        color: #007bff;
+                        font-weight: bold;
+                        transition: background-color 0.2s;
+                    }
+
+                    .btn-copy-hash:hover {
+                        background: #cce5ff;
+                    }
+
+                    .sign-divider {
+                        border-top: 1px solid #e0e0e0;
+                        margin: 20px 0;
+                    }
+
+                    .sign-label {
+                        display: block;
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin-bottom: 8px;
+                    }
+
+                    .btn-submit-sign {
+                        font-size: 16px;
+                        padding: 10px 25px;
+                    }
+
                 </style>
 
             </head>
@@ -256,14 +380,6 @@
                                 <p class="section-title">Phương thức thanh toán</p>
                                 <p>${paymentMethodName}</p>
                             </div>
-                        </div>
-
-                        <div class="footer-actions">
-                            <p class="help">
-                                Cần hỗ trợ? <a href="<c:url value='/LienHe'/>">Liên hệ chúng tôi</a>
-                            </p>
-                            <button class="continue-btn" onclick="window.location.href='SanPham-TatCa'">Tiếp tục mua
-                                hàng</button>
                         </div>
                     </div>
 
@@ -334,33 +450,111 @@
 
                     </div>
                 </div>
-                <%-- Chuỗi băm đơn hàng --%>
-                    <c:if test="${not empty orderHash}">
-                        <div style="margin: 20px 0; padding: 15px; background: #f0f7ff; 
-            border: 1px solid #1a73e8; border-radius: 6px;">
-                            <p style="margin: 0 0 8px 0; font-weight: bold; color: #1a73e8;">
-                                🔐 Chuỗi băm đơn hàng
-                            </p>
-                            <p style="margin: 0 0 10px 0; font-size: 13px; color: #666;">
-                                Sao chép chuỗi bên dưới → dùng tool ký số → dán chữ ký vào trang
-                                <a href="<c:url value='/ChuKySo'/>">Chữ ký số</a>
-                            </p>
-                            <div id="hashValue" style="background: #fff; border: 1px solid #ccc;
-         padding: 10px; border-radius: 4px; word-break: break-all;
-         font-family: monospace; font-size: 13px; color: #333;">
-                                ${orderHash}
+                <%-- Khối xác nhận đơn hàng --%>
+                <c:if test="${not empty orderHash}">
+                    <div class="sign-box-container">
+
+                        <div class="tool-download-box">
+                            <div>
+                                <h5 class="tool-title">Tải công cụ hỗ trợ ký số dữ liệu</h5>
+                                <p class="tool-desc">Để đảm bảo an toàn, việc tạo khóa và ký số được thực hiện Offline trên máy tính cá nhân. Vui lòng tải bộ cài đặt (hỗ trợ Windows).</p>
                             </div>
-                            <button onclick="navigator.clipboard.writeText('${orderHash}');
-                     this.innerText='✅ Đã copy!';
-                     setTimeout(()=>this.innerText='📋 Copy hash', 2000);" style="margin-top: 8px; padding: 6px 16px; cursor: pointer;
-                   border: 1px solid #1a73e8; border-radius: 4px; 
-                   background: #fff; color: #1a73e8; font-size: 13px;">
-                                📋 Copy hash
-                            </button>
+                            <a href="<c:url value='/Downloads/ToolChuKy-1.0.exe'/>" class="ds-btn btn-download-tool">
+                                Tải về máy (.exe)
+                            </a>
                         </div>
-                    </c:if>
+
+                        <h4 class="sign-title">Ký xác nhận đơn hàng</h4>
+                        <p class="sign-guide">
+                            <strong>Hướng dẫn ký:</strong> Sao chép chuỗi băm thông tin đơn hàng bên dưới → Đưa vào Tool kèm theo private key để tạo chữ ký → Sao chép và dán chữ ký vào ô "Chữ ký" trên web và ấn "Xác nhận chữ ký".
+                        </p>
+
+                        <div id="hashValue" class="hash-display-box">
+                                ${orderHash}
+                        </div>
+
+                        <button onclick="navigator.clipboard.writeText('${orderHash}'); this.innerText='✔ Đã copy hash'; setTimeout(()=>this.innerText='Copy hash', 2000);" class="btn-copy-hash">
+                            Copy hash
+                        </button>
+
+                        <hr class="sign-divider">
+
+                        <form id="signForm" action="<c:url value='/ChuKySo'/>" method="POST" class="sign-order-form">
+                            <input type="hidden" name="action" value="signOrder">
+                            <input type="hidden" name="order_id" value="${orderId.replace('#', '')}">
+
+                            <div style="margin-bottom: 15px;">
+                                <label class="sign-label">Chữ ký:</label>
+                                <textarea id="signatureInput" name="signature" placeholder="Dán chữ ký bạn vừa tạo từ Tool vào đây..." class="form-control" required></textarea>
+                            </div>
+
+                            <button id="btnSubmitSign" type="submit" class="ds-btn ds-btn-primary btn-submit-sign">Xác nhận chữ ký</button>
+                            <div id="signMessage" style="margin-top: 15px; font-weight: bold; display: none; font-size: 15px;"></div>
+                        </form>
+                    </div>
+                </c:if>
+
+                <div class="footer-actions">
+                    <p class="help">
+                        Cần hỗ trợ? <a href="<c:url value='/LienHe'/>">Liên hệ chúng tôi</a>
+                    </p>
+                    <button class="continue-btn" onclick="window.location.href='SanPham-TatCa'">Tiếp tục mua
+                        hàng</button>
+                </div>
+
+                <script>
+                    document.getElementById("signForm").addEventListener("submit", function(e) {
+                        e.preventDefault();
+
+                        const btn = document.getElementById("btnSubmitSign");
+                        const msgBox = document.getElementById("signMessage");
+                        const signatureInput = document.getElementById("signatureInput");
+
+                        const formData = new FormData(this);
+                        const searchParams = new URLSearchParams(formData);
+
+                        // Hiệu ứng chờ
+                        btn.innerText = "Đang xử lý...";
+                        btn.disabled = true;
+                        msgBox.style.display = "none";
+
+                        fetch("ChuKySo", {
+                            method: 'POST',
+                            body: searchParams
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error("HTTP " + response.status);
+                                }
+                                return response.text();
+                            })
+                            .then(text => {
+                                if(text.trim() === 'success') {
+                                    msgBox.style.display = "block";
+                                    msgBox.style.color = "#28a745";
+                                    msgBox.innerText = "✔ Ký xác nhận đơn hàng thành công! Đã lưu chữ ký vào hệ thống.";
+
+                                    // Khóa form lại
+                                    signatureInput.disabled = true;
+                                    btn.innerText = "Đã xác nhận";
+                                } else {
+                                    msgBox.style.display = "block";
+                                    msgBox.style.color = "#dc3545";
+                                    msgBox.innerText = text.replace("error: ", "");
+
+                                    btn.innerText = "Xác nhận chữ ký";
+                                    btn.disabled = false;
+                                }
+                            })
+                            .catch(err => {
+                                msgBox.style.display = "block";
+                                msgBox.style.color = "#dc3545";
+                                msgBox.innerText = "Lỗi kết nối: " + err.message + ". Vui lòng thử lại!";
+                                btn.innerText = "Xác nhận chữ ký";
+                                btn.disabled = false;
+                            });
+                    });
+                </script>
 
             </body>
-
-
             </html>

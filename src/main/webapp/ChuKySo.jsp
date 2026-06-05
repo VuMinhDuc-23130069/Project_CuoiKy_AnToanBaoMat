@@ -263,6 +263,7 @@
                     border: 1px solid #dee2e6;
                     border-radius: 4px;
                     padding: 30px;
+                    margin-bottom: 24px;
                 }
 
                 /* Trạng thái */
@@ -358,50 +359,6 @@
 
                 .ds-modal-footer {
                     border-top: none;
-                }
-
-                /* ====== FORM KÝ ĐƠN HÀNG ====== */
-                .sign-order-title {
-                    font-size: 18px;
-                    font-weight: 600;
-                    color: #2c1c12;
-                    margin-bottom: 15px;
-                    margin-top: 0;
-                }
-
-                .sign-order-form .form-group {
-                    margin-bottom: 15px;
-                }
-
-                .sign-order-form label {
-                    display: block;
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: #333;
-                    margin-bottom: 6px;
-                }
-
-                .sign-order-form .form-control {
-                    border: 1px solid #ced4da;
-                    border-radius: 4px;
-                    padding: 8px 12px;
-                    font-size: 14px;
-                    color: #333;
-                    background: #fff;
-                    transition: border-color 0.2s;
-                }
-
-                .sign-order-form .form-control:focus {
-                    border-color: #007bff;
-                    outline: none;
-                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
-                }
-
-                .sign-order-form textarea.form-control {
-                    resize: vertical;
-                    min-height: 100px;
-                    font-family: monospace;
-                    font-size: 13px;
                 }
             </style>
 
@@ -586,28 +543,6 @@
                         <div class="ds-container">
                             <h2 class="ds-title">Quản lý Chữ ký số</h2>
 
-                            <div class="p-3 mb-4 rounded" style="background-color: #f8f9fa; border: 1px solid #dee2e6;">
-                                <div class="row align-items-center">
-                                    <div class="col-md-8 col-sm-12">
-                                        <h5
-                                            style="font-size: 16px; font-weight: 700; color: #2c1c12; margin-bottom: 5px;">
-                                            Tải công cụ hỗ trợ ký số dữ liệu
-                                        </h5>
-                                        <p class="mb-md-0" style="font-size: 15px; color: #555; line-height: 1.4;">
-                                            Để đảm bảo an toàn, việc tạo khóa và ký số được thực hiện Offline trên máy
-                                            tính cá nhân.
-                                            Vui lòng tải bộ cài đặt của hệ thống (hỗ trợ Windows).
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12 text-md-end text-start mt-2 mt-md-0">
-                                        <a href="<c:url value='/Downloads/ToolChuKy-1.0.exe'/>" class="ds-btn"
-                                            style="background-color: #28a745; color: white; font-weight: 600; padding: 8px 16px;">
-                                            Tải về máy (.exe)
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
                             <% String message=(String) session.getAttribute("message"); String error=(String)
                                 session.getAttribute("error"); if (message !=null) { %>
                                 <div class="ds-alert ds-alert-success">
@@ -620,7 +555,6 @@
                                     <% session.removeAttribute("error"); } %>
 
                                         <div class="ds-card">
-
                                             <c:choose>
                                                 <c:when test="${not empty activeKey}">
                                                     <h3 class="ds-status ds-status-active">Trạng thái: Đang hoạt động
@@ -628,16 +562,12 @@
                                                     <p>
                                                         <strong>Ngày tạo khoá:</strong>
                                                         <fmt:formatDate value="${activeKey.createdAt}"
-                                                            pattern="dd/MM/yyyy HH:mm:ss" />
+                                                                        pattern="dd/MM/yyyy HH:mm:ss" />
                                                     </p>
                                                     <p><em>Khoá này đang được sử dụng để xác thực các đơn hàng của
-                                                            bạn.</em></p>
-
-
-
-
+                                                        bạn.</em></p>
                                                     <form id="revokeForm" action="<c:url value='/ChuKySo'/>"
-                                                        method="POST">
+                                                          method="POST">
                                                         <input type="hidden" name="action" value="revokeKey">
                                                         <div class="ds-alert-warning">
                                                             <p class="ds-warning-text">
@@ -647,7 +577,7 @@
                                                             </p>
                                                         </div>
                                                         <button type="button" class="ds-btn ds-btn-danger"
-                                                            data-bs-toggle="modal" data-bs-target="#confirmRevokeModal">
+                                                                data-bs-toggle="modal" data-bs-target="#confirmRevokeModal">
                                                             Báo mất khoá
                                                         </button>
                                                     </form>
@@ -657,39 +587,10 @@
                                                     <h3 class="ds-status ds-status-inactive">Trạng thái: Chưa có khoá
                                                     </h3>
                                                     <p>Bạn hiện không có chữ ký số nào đang hoạt động. Vui lòng tạo khoá
-                                                        mới để đảm bảo an toàn cho các giao dịch.</p>
-
-                                                    <a href="" class="ds-btn ds-btn-primary">
-                                                        Tạo khoá mới
-                                                    </a>
+                                                        mới trong quá trình đặt hàng.</p>
                                                     <hr class="ds-divider">
-
-                                                    <%-- ✅ FORM KÝ NẰM TRONG ds-card --%>
-                                                        <h4 class="sign-order-title">Ký xác nhận đơn hàng</h4>
-                                                        <form action="<c:url value='/ChuKySo'/>" method="POST"
-                                                            class="sign-order-form">
-                                                            <input type="hidden" name="action" value="signOrder">
-                                                            <div class="form-group">
-                                                                <label>Mã đơn hàng:</label>
-                                                                <input type="number" name="order_id"
-                                                                    placeholder="Nhập mã đơn hàng..."
-                                                                    class="form-control" style="max-width: 300px;">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Chữ ký:</label>
-                                                                <textarea name="signature"
-                                                                    placeholder="Dán chữ ký vào đây..."
-                                                                    class="form-control" rows="4"></textarea>
-                                                            </div>
-                                                            <button type="submit" class="ds-btn ds-btn-primary">
-                                                                Xác nhận chữ ký
-                                                            </button>
-                                                        </form>
                                                 </c:otherwise>
-
-
                                             </c:choose>
-
                                         </div>
                         </div>
 
