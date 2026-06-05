@@ -2,6 +2,19 @@ package vn.edu.nlu.fit.model;
 
 import java.sql.Timestamp;
 
+/**
+ * Model representing user RSA public key storage
+ * Maps to user_keys table
+ * Private keys are NEVER stored - only used immediately for download/email
+ *
+ * Database Mapping:
+ * - id → id
+ * - user_id → userId
+ * - public_key → publicKey
+ * - is_active → active
+ * - created_at → createdAt
+ * - revoked_at → revokedAt
+ */
 public class UserKey {
     private int id;
     private int userId;
@@ -22,6 +35,7 @@ public class UserKey {
         this.revokedAt = revokedAt;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -68,5 +82,16 @@ public class UserKey {
 
     public void setRevokedAt(Timestamp revokedAt) {
         this.revokedAt = revokedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "UserKey{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", active=" + isActive +
+                ", createdAt=" + createdAt +
+                ", revokedAt=" + revokedAt +
+                '}';
     }
 }
