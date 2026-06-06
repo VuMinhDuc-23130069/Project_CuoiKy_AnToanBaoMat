@@ -57,7 +57,7 @@ public class ChuKySo extends HttpServlet {
                 OrderDAO orderDAO = new OrderDAO();
                 Orders order = orderDAO.getOrderById(orderId);
 
-                if (!service.isKeyValid(currentUser.getId(), uploadedSignature)) {
+                if (!service.isKeyValid(orderId)) {
                     response.getWriter().write("error: Khoá bảo mật của bạn đã bị vô hiệu hoá. Vui lòng tạo khoá mới!");
                     return;
                 }

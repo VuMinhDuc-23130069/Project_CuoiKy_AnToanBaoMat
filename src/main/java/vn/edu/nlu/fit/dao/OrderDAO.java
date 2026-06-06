@@ -4,6 +4,7 @@ import vn.edu.nlu.fit.Cart.Cart;
 import vn.edu.nlu.fit.Cart.CartItem;
 import vn.edu.nlu.fit.model.Orders;
 import vn.edu.nlu.fit.model.Products_Orders;
+import vn.edu.nlu.fit.model.UserKey;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -30,12 +31,16 @@ public class OrderDAO extends BaseDao {
 
                 return getJdbi().inTransaction(handle -> {
                         try {
+                                UserKeyDAO keyDAO = new UserKeyDAO();
+                                UserKey activeKey = keyDAO.getActiveKeyByUserId(userId);
+                                Integer keyId = (activeKey != null) ? activeKey.getId() : null;
+
                                 // Cập nhật câu lệnh SQL có thêm trường discount_id
                                 String sqlOrder = "INSERT INTO orders " +
-                                                "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note, discount_id) "
+                                                "(fullname, phone, email, total, order_date, order_address, order_status, user_id, delivery_method_id, payment_method_id, note, discount_id, key_id) "
                                                 +
                                                 "VALUES " +
-                                                "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note, :discountId)";
+                                                "(:name, :phone, :email, :total, :date, :address, :status, :userId, :deliveryId, :paymentId, :note, :discountId, :keyId)";
 
                                 int orderId = handle.createUpdate(sqlOrder)
                                                 .bind("name", name)
@@ -50,6 +55,7 @@ public class OrderDAO extends BaseDao {
                                                 .bind("paymentId", paymentId)
                                                 .bind("note", note)
                                                 .bind("discountId", discountId) // Lưu ID mã giảm giá (có thể null)
+                                                .bind("keyId", keyId)
                                                 .executeAndReturnGeneratedKeys("id")
                                                 .mapTo(Integer.class)
                                                 .one();
@@ -149,6 +155,7 @@ public class OrderDAO extends BaseDao {
                                 "o.delivery_method_id AS deliveryMethodID, " +
                                 "o.payment_method_id AS paymentMethodID, " +
                                 "o.discount_id AS discountID, " +
+                                "o.key_id AS keyId, " +
                                 "o.note, " +
                                 "o.order_hash AS orderHash, " +
                                 "o.digital_signature AS digitalSignature, " +
