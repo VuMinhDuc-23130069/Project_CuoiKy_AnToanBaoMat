@@ -132,16 +132,23 @@ public class UserKeyDAO extends BaseDao {
 
     // Hàm báo mất khoá
     public void revokeKey(int userId) {
-        String sql = """
-                UPDATE user_keys 
-                SET is_active = 0, revoked_at = NOW()
-                WHERE user_id = :userId AND is_active = 1
-                """;
-
+        String sql = "UPDATE user_keys SET is_active = 0, revoked_at = :now WHERE user_id = :userId AND is_active = 1";
         getJdbi().withHandle(handle ->
                 handle.createUpdate(sql)
                         .bind("userId", userId)
+                        .bind("now", new java.sql.Timestamp(System.currentTimeMillis()))
                         .execute()
+        );
+    }
+
+    // Lấy khóa mới nhất
+    public UserKey findMostRecentKeyForCheck(int userId) {
+        String sql = "SELECT * FROM user_keys WHERE user_id = :userId ORDER BY created_at DESC LIMIT 1";
+        return getJdbi().withHandle(h -> h.createQuery(sql)
+                .bind("userId", userId)
+                .mapToBean(UserKey.class)
+                .findOne()
+                .orElse(null)
         );
     }
 
