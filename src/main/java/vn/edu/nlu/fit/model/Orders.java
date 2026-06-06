@@ -22,6 +22,7 @@ public class Orders {
     private String orderHash;
     private String digitalSignature;
     private boolean altered = false;
+    private Integer keyId;
 
     public Orders(int id, String fullName, String phone, String email, double total, Timestamp orderDate,
             String orderAddress, int orderStatus, int userID, int deliveryMethodID, String deliveryMethod,
@@ -179,6 +180,14 @@ public class Orders {
 
     public void setAltered(boolean altered) {
         this.altered = altered;
+    }
+
+    public Integer getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(Integer keyId) {
+        this.keyId = keyId;
     }
 
     @Override

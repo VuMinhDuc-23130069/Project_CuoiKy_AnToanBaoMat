@@ -3,6 +3,7 @@ package vn.edu.nlu.fit.services;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
+import vn.edu.nlu.fit.dao.OrderDAO;
 import vn.edu.nlu.fit.dao.UserKeyDAO;
 import vn.edu.nlu.fit.model.Orders;
 import vn.edu.nlu.fit.model.UserKey;
@@ -30,14 +31,20 @@ public class ChuKySoService {
         }
     }
 
-    public boolean isKeyValid(int userId, String signature) {
-        UserKey recentKey = userKeyDAO.findMostRecentKeyForCheck(userId);
-        if (recentKey == null) {
+    public boolean isKeyValid(int orderId) {
+        OrderDAO orderDAO = new OrderDAO();
+        Orders order = orderDAO.getOrderById(orderId);
+
+        // Nếu đơn hàng không có key_id
+        if (order == null || order.getKeyId() == null || order.getKeyId() == 0) {
             return false;
         }
 
-        // Nếu khóa đã có revoked_at thì Không được ký
-        if (recentKey.getRevokedAt() != null) {
+        // Lấy đúng khóa đã dùng cho đơn hàng này
+        UserKey keyUsedForOrder = userKeyDAO.findById(order.getKeyId());
+
+        // Nếu khóa đã bị báo mất -> Không cho ký
+        if (keyUsedForOrder == null || keyUsedForOrder.getRevokedAt() != null) {
             return false;
         }
 
