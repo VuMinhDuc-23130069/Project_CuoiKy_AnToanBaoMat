@@ -29,6 +29,21 @@ public class ChuKySoService {
             return false;
         }
     }
+
+    public boolean isKeyValid(int userId, String signature) {
+        UserKey recentKey = userKeyDAO.findMostRecentKeyForCheck(userId);
+        if (recentKey == null) {
+            return false;
+        }
+
+        // Nếu khóa đã có revoked_at thì Không được ký
+        if (recentKey.getRevokedAt() != null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static String hashOrderInfo(Orders order) throws Exception {
     // Băm: mã đơn | tên | sdt | địa chỉ | khuyến mãi | pttt | thời gian | tổng tiền
     String data = order.getId()
