@@ -2,7 +2,9 @@ package vn.edu.nlu.fit.services;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.sql.Timestamp;
 
+import vn.edu.nlu.fit.dao.OrderDAO;
 import vn.edu.nlu.fit.dao.UserKeyDAO;
 import vn.edu.nlu.fit.model.Orders;
 import vn.edu.nlu.fit.model.UserKey;
@@ -29,6 +31,49 @@ public class ChuKySoService {
             return false;
         }
     }
+
+    // Xử lý cập nhật khoá mới
+    public boolean updateKey(int userId, String publicKey) {
+        try {
+            // Hủy khóa cũ
+            userKeyDAO.revokeKey(userId);
+
+            // Tạo khóa mới
+            UserKey newKey = new UserKey();
+            newKey.setUserId(userId);
+            newKey.setPublicKey(publicKey);
+            newKey.setActive(true);
+            newKey.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+
+            // Lưu vào DB
+            userKeyDAO.insert(newKey);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isKeyValid(int orderId) {
+        OrderDAO orderDAO = new OrderDAO();
+        Orders order = orderDAO.getOrderById(orderId);
+
+        // Nếu đơn hàng không có key_id
+        if (order == null || order.getKeyId() == null || order.getKeyId() == 0) {
+            return false;
+        }
+
+        // Lấy đúng khóa đã dùng cho đơn hàng này
+        UserKey keyUsedForOrder = userKeyDAO.findById(order.getKeyId());
+
+        // Nếu khóa đã bị báo mất -> Không cho ký
+        if (keyUsedForOrder == null || keyUsedForOrder.getRevokedAt() != null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static String hashOrderInfo(Orders order) throws Exception {
     // Băm: mã đơn | tên | sdt | địa chỉ | khuyến mãi | pttt | thời gian | tổng tiền
     String data = order.getId()

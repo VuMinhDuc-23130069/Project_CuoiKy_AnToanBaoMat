@@ -117,6 +117,9 @@ public class KeyController extends HttpServlet {
     private void handleGenerateKey(HttpServletRequest request, HttpServletResponse response, Users currentUser)
             throws IOException {
         String label = request.getParameter("label");
+        String emailTo = request.getParameter("email");
+        boolean sendEmail = emailTo != null && !emailTo.trim().isEmpty();
+
         if (label == null || label.trim().isEmpty()) {
             label = "Default Key - " + System.currentTimeMillis();
         }
@@ -133,13 +136,19 @@ public class KeyController extends HttpServlet {
 
             // Send confirmation email (no private key included)
             try {
-                KeyEmailService.sendKeyGenerationConfirmation(
-                        currentUser.getEmail(),
-                        currentUser.getFullName()
-                );
+                if (sendEmail) {
+                    // Send private key via email if requested
+                    KeyEmailService.sendPrivateKeyViaEmail(emailTo, privateKeyPem, currentUser.getFullName());
+                } else {
+                    // Send regular confirmation notice
+                    KeyEmailService.sendKeyGenerationConfirmation(
+                            currentUser.getEmail(),
+                            currentUser.getFullName()
+                    );
+                }
             } catch (Exception e) {
                 // Log but don't fail the request
-                System.err.println("Failed to send key generation confirmation: " + e.getMessage());
+                System.err.println("Failed to send key email: " + e.getMessage());
             }
 
             // Stream the private key as a downloadable PEM file in this response (one-time)
@@ -209,10 +218,11 @@ public class KeyController extends HttpServlet {
      */
     private void handleSendPrivateKey(HttpServletRequest request, HttpServletResponse response, Users currentUser)
             throws IOException {
-        // Disabled: sending private keys from server-side storage is not allowed.
-        // If you need to email the private key, use the generation endpoint with an option to send the private key in the same request.
-        sendError(response, HttpServletResponse.SC_GONE,
-                "Endpoint disabled: sending private keys from server storage is not supported. Use POST /generate-key with email option.");
+        // This endpoint was legacy and redirected to the new secure flow.
+        // For backwards compatibility or direct calls, we could implement a limited version 
+        // that informs the user to use the generation flow.
+        sendError(response, HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                "Directly sending keys from storage is not supported. Please use the Generate Key flow to email your key.");
     }
 
     /**

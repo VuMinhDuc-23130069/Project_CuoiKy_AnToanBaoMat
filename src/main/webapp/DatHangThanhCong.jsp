@@ -489,6 +489,12 @@
 
                             <button id="btnSubmitSign" type="submit" class="ds-btn ds-btn-primary btn-submit-sign">Xác nhận chữ ký</button>
                             <div id="signMessage" style="margin-top: 15px; font-weight: bold; display: none; font-size: 15px;"></div>
+                            <div id="createKeyArea" style="margin-top: 15px; display: none;">
+                                <button type="button" id="generateKeyBtn" class="ds-btn ds-btn-primary" style="background-color: #ffc107; color: #000;" onclick="generateKeyPair()">
+                                    <i class="fas fa-key"></i> Tạo khóa mới tại đây
+                                </button>
+                                <div id="keyStatusMessage" class="alert" style="display: none; margin-top: 15px;"></div>
+                            </div>
                         </form>
                     </div>
                 </c:if>
@@ -541,6 +547,12 @@
                                     msgBox.style.color = "#dc3545";
                                     msgBox.innerText = text.replace("error: ", "");
 
+                                    if (text.includes("vô hiệu hoá") || text.includes("vô hiệu hóa")) {
+                                        document.getElementById("createKeyArea").style.display = "block";
+                                    } else {
+                                        document.getElementById("createKeyArea").style.display = "none";
+                                    }
+
                                     btn.innerText = "Xác nhận chữ ký";
                                     btn.disabled = false;
                                 }
@@ -554,6 +566,83 @@
                             });
                     });
                 </script>
+
+            <script>
+                /**
+                 * Generate new RSA key pair
+                 */
+                function generateKeyPair(email = null) {
+                    const btn = document.getElementById('generateKeyBtn');
+                    const originalText = btn.innerHTML;
+
+                    // Disable button and show loading state
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="loading-spinner"></span> Đang tạo khóa...';
+
+                    // Build a hidden iframe and form to submit the POST and receive a download without navigating away
+                    const iframeName = 'keyGenDownloadFrame';
+                    let iframe = document.getElementById(iframeName);
+                    if (!iframe) {
+                        iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.id = iframeName;
+                        iframe.name = iframeName;
+                        document.body.appendChild(iframe);
+                    }
+
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '${pageContext.request.contextPath}/generate-key';
+                    form.target = iframeName;
+
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'label';
+                    input.value = 'Key from Shopping Cart - ' + new Date().toLocaleString('vi-VN');
+                    form.appendChild(input);
+
+                    if (email) {
+                        const emailInput = document.createElement('input');
+                        emailInput.type = 'hidden';
+                        emailInput.name = 'email';
+                        emailInput.value = email;
+                        form.appendChild(emailInput);
+                    }
+
+                    document.body.appendChild(form);
+                    form.submit();
+
+                    // Small delay to allow download to start then refresh status and UI
+                    setTimeout(() => {
+                        let msg = 'Khóa RSA đã được tạo và đang được tải xuống. Vui lòng lưu nó ở nơi an toàn.';
+                        if (email) {
+                            msg += ' Đồng thời khóa riêng tư đã được gửi tới ' + email;
+                        }
+                        showMessage('success', msg);
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        // remove temporary form
+                        document.body.removeChild(form);
+                    }, 1500);
+                }
+
+                /**
+                 * Show status message
+                 */
+                function showMessage(type, message) {
+                    const messageContainer = document.getElementById('keyStatusMessage');
+                    const btnSign = document.getElementById('generateKeyBtn');
+                    messageContainer.className = 'alert alert-' + type;
+                    messageContainer.textContent = message;
+                    messageContainer.style.display = 'block';
+
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => {
+                        messageContainer.style.display = 'none';
+                        btnSign.style.display = 'none';
+                    }, 5000);
+                }
+            </script>
 
             </body>
             </html>

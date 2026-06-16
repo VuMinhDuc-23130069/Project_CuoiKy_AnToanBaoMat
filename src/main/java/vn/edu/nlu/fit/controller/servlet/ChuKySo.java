@@ -45,6 +45,26 @@ public class ChuKySo extends HttpServlet {
             response.sendRedirect("ChuKySo");
             return ;
         }
+
+        // Cập nhật khoá mới
+        if ("updateKey".equals(action)) {
+            String publicKey = request.getParameter("publicKey");
+
+            if (publicKey != null && !publicKey.trim().isEmpty()) {
+                boolean isSuccess = service.updateKey(currentUser.getId(), publicKey.trim());
+                if (isSuccess) {
+                    session.setAttribute("message", "Đã cập nhật Khoá công khai mới thành công!");
+                } else {
+                    session.setAttribute("error", "Có lỗi xảy ra khi cập nhật khoá. Vui lòng thử lại!");
+                }
+            } else {
+                session.setAttribute("error", "Vui lòng nhập Khoá công khai!");
+            }
+
+            response.sendRedirect("ChuKySo");
+            return;
+        }
+
         // Lưu chữ ký
         if ("signOrder".equals(action)) {
             String orderIdStr = request.getParameter("order_id");
@@ -56,6 +76,11 @@ public class ChuKySo extends HttpServlet {
                 int orderId = Integer.parseInt(orderIdStr);
                 OrderDAO orderDAO = new OrderDAO();
                 Orders order = orderDAO.getOrderById(orderId);
+
+                if (!service.isKeyValid(orderId)) {
+                    response.getWriter().write("error: Khoá bảo mật của bạn đã bị vô hiệu hoá. Vui lòng tạo khoá mới!");
+                    return;
+                }
 
                 if (uploadedSignature == null || uploadedSignature.trim().isEmpty()) {
                     response.getWriter().write("error: Vui lòng nhập chữ ký!");

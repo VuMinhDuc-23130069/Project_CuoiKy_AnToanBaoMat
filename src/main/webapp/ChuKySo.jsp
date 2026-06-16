@@ -586,9 +586,21 @@
                                                 <c:otherwise>
                                                     <h3 class="ds-status ds-status-inactive">Trạng thái: Chưa có khoá
                                                     </h3>
-                                                    <p>Bạn hiện không có chữ ký số nào đang hoạt động. Vui lòng tạo khoá
-                                                        mới trong quá trình đặt hàng.</p>
-                                                    <hr class="ds-divider">
+                                                    <p>Bạn hiện không có chữ ký số nào đang hoạt động. Vui lòng <strong>tạo khoá
+                                                        mới trong quá trình đặt hàng </strong> hoặc <strong> cập nhật khoá có sẵn </strong>.</p>
+
+                                                    <form action="<c:url value='/ChuKySo'/>" method="POST">
+                                                        <input type="hidden" name="action" value="updateKey">
+
+                                                        <div class="mb-3">
+                                                            <label for="publicKey" class="form-label" style="font-weight: bold;">Khoá công khai <span class="text-danger">*</span></label>
+                                                            <textarea class="form-control" id="publicKey" name="publicKey" rows="5" placeholder="Vui lòng nhập khoá công khai của bạn." required></textarea>
+                                                        </div>
+
+                                                        <button type="submit" class="ds-btn ds-btn-primary" style="width: 100%; padding: 12px; font-size: 16px; font-weight: bold;">
+                                                            <i class="fa-solid fa-key"></i> Cập nhật khoá
+                                                        </button>
+                                                    </form>
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>

@@ -388,7 +388,7 @@
     }
 
     .cate-item {
-        width: 160px;
+        width: 180px;
         text-align: center;
         font-weight: bold;
         overflow: hidden;
@@ -427,7 +427,40 @@
         cursor: pointer;
     }
 
+    /* === CSS Phân trang === */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        gap: 8px;
+    }
 
+    .pagination a {
+        color: #333;
+        padding: 8px 14px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: 500;
+    }
+
+    .pagination a.active {
+        background-color: #03a9f4;
+        color: white;
+        border-color: #03a9f4;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: #f1f1f1;
+    }
+
+    .pagination a.disabled {
+        color: #ccc;
+        pointer-events: none;
+        border-color: #eee;
+    }
 </style>
 <body>
 <div class="container">
@@ -577,6 +610,37 @@
                         </li>
                     </ul>
                 </c:forEach>
+
+                <!-- === Phân trang === -->
+                <c:if test="${totalPages > 1}">
+                    <div class="pagination">
+                        <!-- Nút Previous -->
+                        <c:choose>
+                            <c:when test="${currentPage > 1}">
+                                <a href="${pageContext.request.contextPath}/AdminOrder?page=${currentPage - 1}">&laquo; Trước</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="javascript:void(0)" class="disabled">&laquo; Trước</a>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <!-- Các trang số -->
+                        <c:forEach begin="1" end="${totalPages}" var="i">
+                            <a href="${pageContext.request.contextPath}/AdminOrder?page=${i}"
+                               class="${currentPage == i ? 'active' : ''}">${i}</a>
+                        </c:forEach>
+
+                        <!-- Nút Next -->
+                        <c:choose>
+                            <c:when test="${currentPage < totalPages}">
+                                <a href="${pageContext.request.contextPath}/AdminOrder?page=${currentPage + 1}">Sau &raquo;</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="javascript:void(0)" class="disabled">Sau &raquo;</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
 
             </div>
         </section>
