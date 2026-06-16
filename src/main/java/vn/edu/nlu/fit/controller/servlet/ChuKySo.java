@@ -45,6 +45,26 @@ public class ChuKySo extends HttpServlet {
             response.sendRedirect("ChuKySo");
             return ;
         }
+
+        // Cập nhật khoá mới
+        if ("updateKey".equals(action)) {
+            String publicKey = request.getParameter("publicKey");
+
+            if (publicKey != null && !publicKey.trim().isEmpty()) {
+                boolean isSuccess = service.updateKey(currentUser.getId(), publicKey.trim());
+                if (isSuccess) {
+                    session.setAttribute("message", "Đã cập nhật Khoá công khai mới thành công!");
+                } else {
+                    session.setAttribute("error", "Có lỗi xảy ra khi cập nhật khoá. Vui lòng thử lại!");
+                }
+            } else {
+                session.setAttribute("error", "Vui lòng nhập Khoá công khai!");
+            }
+
+            response.sendRedirect("ChuKySo");
+            return;
+        }
+
         // Lưu chữ ký
         if ("signOrder".equals(action)) {
             String orderIdStr = request.getParameter("order_id");
