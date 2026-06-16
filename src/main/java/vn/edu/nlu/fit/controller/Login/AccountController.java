@@ -44,18 +44,22 @@ public class AccountController extends HttpServlet {
 
         // Kiểm tra chữ ký số
         for (Orders o : listOrders) {
-            // Đơn hàng không có chữ ký số -> không an toàn
-            if (o.getDigitalSignature() == null || o.getDigitalSignature().isEmpty()) {
-                o.setAltered(true);
-                continue;
-            }
-
             try {
+                // Lấy thông tin đơn hàng để băm
+                Orders fullOrder = orderDAO.getOrderById(o.getId());
+                if (fullOrder == null) fullOrder = o;
+
+                // Đơn hàng không có chữ ký số -> không an toàn
+                if (fullOrder.getDigitalSignature() == null || fullOrder.getDigitalSignature().isEmpty()) {
+                    fullOrder.setAltered(true);
+                    continue;
+                }
+
                 // Băm dữ liệu hiện tại trong db
-                String currentHash = hashOrderInfo(o);
+                String currentHash = hashOrderInfo(fullOrder);
 
                 // Lấy Public Key của khách hàng
-                UserKey userKey = keyDao.getActiveKeyByUserId(o.getUserID());
+                UserKey userKey = keyDao.getActiveKeyByUserId(user.getId());
 
                 // Nếu khách hàng không có khoá Public Key -> Không thể xác thực
                 if (userKey == null || userKey.getPublicKey() == null || userKey.getPublicKey().isEmpty()) {
@@ -67,7 +71,7 @@ public class AccountController extends HttpServlet {
                 PublicKey publicKey = PemUtil.decodePublicKey(userKey.getPublicKey());
 
                 // Kiểm tra chữ ký bằng RSA
-                boolean isValid = RSAUtils.verify(currentHash, o.getDigitalSignature(), publicKey);
+                boolean isValid = RSAUtils.verify(currentHash, fullOrder.getDigitalSignature(), publicKey);
 
                 o.setAltered(!isValid);
 
