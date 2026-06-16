@@ -18,7 +18,38 @@ public class AdminOrder extends HttpServlet {
         AdminOrderService service = new AdminOrderService();
         List<Orders> list = service.getAll();
 
-        request.setAttribute("listOrder", list);
+        int itemsPerPage = 15; // Tối đa 10 đơn hàng
+        int currentPage = 1;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e) {
+                currentPage = 1;
+            }
+        }
+
+        // Tính tổng số trang
+        int totalItems = list.size();
+        int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
+
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+
+        // Lấy 10 phần tử cho trang
+        int startIndex = (currentPage - 1) * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+        List<Orders> pagedList = list;
+        if (totalItems > 0) {
+            pagedList = list.subList(startIndex, endIndex);
+        }
+
+        request.setAttribute("listOrder", pagedList);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("Admin-QuanLyDonHang.jsp").forward(request, response);
     }
 
