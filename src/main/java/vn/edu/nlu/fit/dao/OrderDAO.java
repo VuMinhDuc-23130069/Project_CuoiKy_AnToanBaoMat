@@ -94,13 +94,25 @@ public class OrderDAO extends BaseDao {
 
         // DS đơn hàng của người mua đã đăng nhập
         public List<Orders> getOrdersByUserId(int userId) {
-                String sql = "SELECT o.id, o.user_id AS userID, o.total AS total, o.order_status AS orderStatus, " +
-                                "o.order_date AS orderDate, " +
-                                "o.order_address AS orderAddress, " +
-                                "o.fullName AS fullName, o.phone, o.email, d.method_name as deliveryMethod " +
-                                "FROM orders o left join deliverymethods d on o.delivery_method_id = d.id  " +
-                                "WHERE user_id = :userId " +
-                                "ORDER BY order_date DESC";
+            String sql = "SELECT o.id, o.fullName AS fullName, o.phone, o.email, " +
+                    "o.total, o.order_date AS orderDate, " +
+                    "o.order_address AS orderAddress, " +
+                    "o.order_status AS orderStatus, " +
+                    "o.user_id AS userID, " +
+                    "o.delivery_method_id AS deliveryMethodID, " +
+                    "o.payment_method_id AS paymentMethodID, " +
+                    "o.discount_id AS discountID, " +
+                    "o.key_id AS keyId, " +
+                    "o.note, " +
+                    "o.order_hash AS orderHash, " +
+                    "o.digital_signature AS digitalSignature, " +
+                    "d.method_name AS deliveryMethod, " +
+                    "d.price AS shippingFee " +
+                    "FROM orders o " +
+                    "LEFT JOIN deliverymethods d ON o.delivery_method_id = d.id " +
+                    "WHERE o.user_id = :userId " +
+                    "ORDER BY o.order_date DESC";
+
                 return getJdbi().withHandle(handle -> handle.createQuery(sql).bind("userId", userId)
                                 .mapToBean(Orders.class).list());
         }
