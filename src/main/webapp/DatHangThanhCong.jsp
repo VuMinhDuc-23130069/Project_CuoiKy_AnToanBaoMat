@@ -456,7 +456,7 @@
 
                         <div class="tool-download-box">
                             <div>
-                                <h5 class="tool-title">Tải công cụ hỗ trợ ký số đơn hàng(Nhớ giải nén trước khi sử dụng)</h5>
+                                <h5 class="tool-title">Tải công cụ hỗ trợ ký số đơn hàng (Nhớ giải nén trước khi sử dụng)</h5>
                             </div>
                             <a href="<c:url value='/Downloads/ToolChuKy.zip'/>" class="ds-btn btn-download-tool">
                                 Tải về máy (.zip)
