@@ -360,6 +360,38 @@
                 .ds-modal-footer {
                     border-top: none;
                 }
+
+                /* Khối tải công cụ chữ ký */
+                .tool-download-box {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: #fff;
+                    padding: 15px;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 6px;
+                    margin-bottom: 25px; /* Tạo khoảng cách với tiêu đề bên dưới */
+                }
+
+                .tool-title {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #2c1c12;
+                    margin: 0;
+                }
+
+                .btn-download-tool {
+                    background-color: #28a745;
+                    color: white;
+                    font-weight: 600;
+                    white-space: nowrap;
+                    margin-left: 15px;
+                }
+
+                .btn-download-tool:hover {
+                    background-color: #218838;
+                    color: white;
+                }
             </style>
 
             <body>
@@ -541,6 +573,16 @@
 
                     <div class="col-xs-12 col-sm-9">
                         <div class="ds-container">
+
+                            <div class="tool-download-box">
+                                <div>
+                                    <h5 class="tool-title">Tải công cụ hỗ trợ ký số đơn hàng (Nhớ giải nén trước khi sử dụng)</h5>
+                                </div>
+                                <a href="<c:url value='/Downloads/ToolChuKy.zip'/>" class="ds-btn btn-download-tool">
+                                    Tải về máy (.zip)
+                                </a>
+                            </div>
+
                             <h2 class="ds-title">Quản lý Chữ ký số</h2>
 
                             <% String message=(String) session.getAttribute("message"); String error=(String)
